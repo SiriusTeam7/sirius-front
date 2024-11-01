@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+h1, .text-primary {
+    @apply text-textPrimary;
+}
+
+h2, .text-secondary {
+    @apply text-textSecondary;
+}
+
+.title-large {
+    @apply text-2xl font-bold text-primary;
+}
+
+.title-small {
+    @apply text-lg font-semibold text-primary;
+}
+
+.btn-secondary {
+    @apply bg-secondary text-textPrimary py-2 px-4 rounded-lg ;
+}
+
+.input-search {
+    @apply w-full mt-4 p-2 rounded bg-gray-800 text-textPrimary
+}
+
+p, .text-body {
+    @apply text-textPrimary mt-2
+}

@@ -1,41 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  const queryClient = new QueryClient()
-
+import '../src/styles/styles.css'
+const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="text-red-600">Vite + React (And Tailwind :D)</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  )
-}
+    <div className="bg-primary min-h-screen p-4">
+      <header className="mb-6">
+        <h1 className="title-large">Sirius: Memoria Espaciada</h1>
+        <input
+          type="text"
+          placeholder="¿Qué te gustaría aprender hoy?"
+          className="input-search"
+        />
+      </header>
 
-export default App
+      <section className="mb-6">
+        <h2 className="title-small">Retos de cursos actuales</h2>
+        <button className="btn-secondary mt-2">Ya disponible</button>
+      </section>
+
+      <section>
+        <h2 className="title-small">Retos por escuelas</h2>
+        <button className="btn-secondary mt-2">Ya disponible</button>
+        <p>Ejemplo de P</p>
+      </section>
+    </div>
+  );
+};
+
+export default App;
