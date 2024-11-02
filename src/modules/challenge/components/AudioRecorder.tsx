@@ -63,7 +63,7 @@ export function AudioRecorder({ onAudioRecorded }: AudioRecorderProps) {
                     </Button>
                 )}
                 {isRecording && (
-                    <Button onClick={stopRecording} variant="outline" size="icon">
+                    <Button onClick={stopRecording} variant="breathing" size="icon">
                         <Square className="h-4 w-4" />
                         <span className="sr-only">Stop recording</span>
                     </Button>
