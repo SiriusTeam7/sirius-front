@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import curso1 from '@/assets/curso-conversacional.png';
 import curso2 from '@/assets/course-english.png';
 import curso3 from '@/assets/curso-java.png'
@@ -16,15 +16,17 @@ const challenges = [
 
 const ChallengesAvailable = () => {
     const [openDialog, setOpenDialog] = useState(false);
+    /*
     const [selectedChallenge, setSelectedChallenge] = useState(null);
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
      //   setSelectedChallenge(null);
     };
+    */
 
     const handleCardClick = () => {
-       // setSelectedChallenge(challenge);
+        // setSelectedChallenge(challenge);
         setOpenDialog(true);
     };
 
@@ -35,7 +37,7 @@ const ChallengesAvailable = () => {
                 {challenges.map((challenge) => (
                     <div
                         key={challenge.id}
-                        onClick={() => {handleCardClick() }}
+                        onClick={() => { handleCardClick() }}
                         className={`flex items-center p-4 rounded-lg shadow-md w-80 h-40 cursor-pointer ${challenge.color}`}
 
                     >
@@ -51,7 +53,7 @@ const ChallengesAvailable = () => {
                 {openDialog && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className=" rounded-lg shadow-lg w-full max-w-md">
-                            <ChallengeLayout/>
+                            <ChallengeLayout />
                         </div>
                     </div>
                 )}
