@@ -1,14 +1,18 @@
-import ChallengeLayout from "@/modules/challenge/components/ChallengeLayout"
-import Header from "../design-system/Header"
+import Header from "@/modules/core/design-system/Header"
+import TitleBar from "@/modules/core/design-system/TitleBar"
+import ChallengesAvailable from "@/modules/challengeGrid/ChallengesAvailables"
 
 function MainLayout() {
     return (
 
 
-        <div className="bg-primary min-h-screen p-4">
-
+        <div className="bg-primary min-h-screen w-full mx-auto  p-4">
             <Header />
-            <ChallengeLayout />
+            <TitleBar />
+            <ChallengesAvailable />
+            <div className="w-full h-px bg-gray-300 mt-4"></div>
+
+          { /* <ChallengeLayout />
             {
 
 
