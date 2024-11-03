@@ -8,10 +8,7 @@ import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 const challenges = [
     { id: 1, title: 'Curso: Conversaciones dificiles', icon: curso1, color: 'bg-[#CE3A40]' },
     { id: 2, title: 'Curso: Inglés básico', icon: curso2, color: 'bg-[#F3B3DA]' },
-    { id: 3, title: 'Curso: Java', icon: curso3, color: 'bg-[#444C65]' },
-    { id: 1, title: 'Curso: Conversaciones dificiles', icon: curso1, color: 'bg-[#CE3A40]' },
-    { id: 2, title: 'Curso: Inglés básico', icon: curso2, color: 'bg-[#F3B3DA]' },
-    { id: 3, title: 'Curso: Java', icon: curso3, color: 'bg-[#444C65]' },
+    { id: 3, title: 'Curso: Java', icon: curso3, color: 'bg-[#444C65]' }
 ];
 
 const ChallengesAvailable = () => {
