@@ -5,6 +5,7 @@ import curso3 from '@/assets/curso-java.png';
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 import ChallengeCard from './CallengeCard';
 import { Challenge } from '@interfaces/ChallengeCard.interface';
+import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
 
 
 const challenges: Challenge[] = [
@@ -17,6 +18,9 @@ const challenges: Challenge[] = [
 const ChallengesAvailable = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
+
+
+    const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback'>('challenge')
 
     /*
     const handleCloseDialog = (dialogOpen: boolean) => {
@@ -49,7 +53,19 @@ const ChallengesAvailable = () => {
             {openDialog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
-                        <ChallengeLayout setModalOpen={setOpenDialog} selectedChallenge={selectedChallenge} />
+                        {dialogStatus === 'challenge' && (<ChallengeLayout setModalOpen={setOpenDialog} selectedChallenge={selectedChallenge} />)}
+                        {dialogStatus === 'loading' && (<div>loading</div>)}
+                        {dialogStatus === 'feedback' && (<FeedbackLayout
+                            challengeTitle="Challenge Title"
+                            feedbackText="Feedback Text"
+                            followUpLinks={[
+                                { title: "Link 1", url: "#" },
+                                { title: "Link 2", url: "#" },
+                                { title: "Link 3", url: "#" },
+                            ]}
+                            onRetake={() => console.log('Retake')}
+                            onGoHome={() => console.log('Go Home')}
+                        />)}
                     </div>
                 </div>
             )}

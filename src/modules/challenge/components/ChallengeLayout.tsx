@@ -14,6 +14,7 @@ export default function ChallengeLayout({ setModalOpen, selectedChallenge }: Cha
     const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
 
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (inputMode === 'audio') {

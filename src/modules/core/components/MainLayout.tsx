@@ -29,6 +29,8 @@ function MainLayout() {
 
 
             <ChallengesAvailable />
+
+
         </div>
 
     )
