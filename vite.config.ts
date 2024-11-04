@@ -8,6 +8,9 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@core": path.resolve(__dirname, "./src/modules/core"),
+      "@home": path.resolve(__dirname, "./src/modules/home"),
+      "@auth": path.resolve(__dirname, "./src/modules/auth"),
+      "@interfaces": path.resolve(__dirname, "./src/modules/core/interfaces"),
     },
   },
   plugins: [react()],

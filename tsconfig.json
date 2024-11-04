@@ -26,7 +26,10 @@
     "baseUrl": ".", // This must be set to resolve paths
     "paths": {
       "@/*": ["src/*"],
-      "@core/*": ["src/modules/core/*"]
+      "@core/*": ["src/modules/core/*"],
+      "@interfaces/*": ["src/modules/core/interfaces/*"],
+      "@home/*": ["src/modules/home/*"],
+      "@challenge/*": ["src/modules/challenge/*"]
     }
   },
   "include": ["src"],
