@@ -1,7 +1,8 @@
 import Header from "@/modules/core/design-system/Header"
 import TitleBar from "@/modules/core/design-system/TitleBar"
-import ChallengesAvailable from "@/modules/challengeGrid/ChallengesAvailables"
+import ChallengesAvailable from "@/modules/home/components/ChallengesAvailables"
 import CalendarLayout from "@/modules/calendar/CalendarLayout"
+
 
 function MainLayout() {
     return (
@@ -14,7 +15,7 @@ function MainLayout() {
             <div className="w-full h-px bg-gray-300 mt-4"></div>
             <CalendarLayout />
 
-          { /* <ChallengeLayout />
+            { /* <ChallengeLayout />
             {
 
 
