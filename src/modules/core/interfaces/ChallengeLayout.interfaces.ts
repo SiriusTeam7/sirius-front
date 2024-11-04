@@ -1,6 +1,7 @@
-import { Challenge } from "./ChallengeCard.interface";
+import { Challenge } from "./Shared.interface";
 
 export interface ChallengeLayoutProps {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
+  onSubmit: () => void;
   selectedChallenge: Challenge | null;
 }
