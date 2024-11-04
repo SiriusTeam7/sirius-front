@@ -5,7 +5,11 @@ import { AudioRecorder } from './AudioRecorder'
 import { ToggleGroup, ToggleGroupItem } from '@/modules/core/design-system/Toggle'
 import { Mic, Type } from 'lucide-react'
 
-export default function ChallengeLayout() {
+interface ChallengeLayoutProps {
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) {
     const [response, setResponse] = useState('')
     const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
@@ -28,7 +32,15 @@ export default function ChallengeLayout() {
     return (
         <div className="min-h-screen bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6">Challenge</h1>
+                <div className="w-full flex justify-between mb-4">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6">Challenge</h1>
+                    <Button
+                        variant="ghost"
+                        onClick={() => setModalOpen(false)}
+                    >
+                        X
+                    </Button>
+                </div>
                 <div className="bg-[#1E2329] rounded-lg p-6 mb-8">
                     <p className="text-lg md:text-xl mb-4">
                         Describe a situation where you had to solve a complex problem. What was your approach, and what was the outcome?
@@ -52,18 +64,18 @@ export default function ChallengeLayout() {
                         <AudioRecorder onAudioRecorded={handleAudioRecorded} />
                     ) : (
                         <div>
-                            <label htmlFor="response" className="block text-sm font-medium mb-2">Your Response</label>
+                            <label htmlFor="response" className="block text-sm font-medium mb-2">Escribe tu respuesta <span className='text-red-500'>*</span></label>
                             <Textarea
                                 id="response"
                                 value={response}
                                 onChange={(e) => setResponse(e.target.value)}
-                                placeholder="Type your response here..."
+                                placeholder="¿Cómo resuelves este problema?"
                                 className="w-full h-48"
                             />
                         </div>
                     )}
-                    <Button type="submit" size="lg">
-                        Submit Response
+                    <Button type="submit" size="lg" variant="secondary">
+                        Enviar
                     </Button>
                 </form>
             </div>
