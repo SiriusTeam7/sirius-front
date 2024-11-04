@@ -1,6 +1,6 @@
 import Header from "@/modules/core/design-system/Header"
 import TitleBar from "@/modules/core/design-system/TitleBar"
-import ChallengesAvailable from "@/modules/challengeGrid/ChallengesAvailables"
+import ChallengesAvailable from "@/modules/home/components/ChallengesAvailables"
 
 function MainLayout() {
     return (
@@ -12,7 +12,7 @@ function MainLayout() {
             <ChallengesAvailable />
             <div className="w-full h-px bg-gray-300 mt-4"></div>
 
-          { /* <ChallengeLayout />
+            { /* <ChallengeLayout />
             {
 
 
