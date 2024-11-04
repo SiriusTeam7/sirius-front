@@ -30,9 +30,9 @@ const ChallengesAvailable = () => {
     };
 
     return (
-        <div className="p-4">
-            <h2 className="title-large">Retos disponibles</h2>
-            <div className="flex space-x-4 p-5 overflow-x-auto">
+        <div className="p-3 sm:p-4">
+            <h2 className="title-large text-center sm:text-left">Retos disponibles</h2>
+            <div className="flex space-x-3 sm:space-x-4 p-3 sm:p-5 overflow-x-auto">
                 {challenges.map((challenge) => (
                     <ChallengeCard
                         id={challenge.id}
@@ -43,7 +43,6 @@ const ChallengesAvailable = () => {
                         onClick={handleCardClick}
                     />
                 ))}
-
                 {openDialog && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
