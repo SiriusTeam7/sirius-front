@@ -1,10 +1,8 @@
 import { useState, useRef } from 'react'
-import { Button } from "@core/design-system/Button"
 import { Mic, Square, Play, RotateCcw } from 'lucide-react'
 
-interface AudioRecorderProps {
-    onAudioRecorded: (blob: Blob) => void
-}
+import { Button } from "@core/design-system/Button"
+import { AudioRecorderProps } from '@interfaces/AudioRecorder.interface'
 
 export function AudioRecorder({ onAudioRecorded }: AudioRecorderProps) {
     const [isRecording, setIsRecording] = useState(false)

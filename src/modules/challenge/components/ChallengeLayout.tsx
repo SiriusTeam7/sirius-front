@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { Button } from "@core/design-system/Button"
-import { Textarea } from "@core/design-system/TextArea"
+
 import { AudioRecorder } from './AudioRecorder'
-import { ToggleGroup, ToggleGroupItem } from '@/modules/core/design-system/Toggle'
 import { Mic, Type } from 'lucide-react'
 
-interface ChallengeLayoutProps {
-    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
+import { Button } from "@core/design-system/Button"
+import { Textarea } from "@core/design-system/TextArea"
+import { ToggleGroup, ToggleGroupItem } from '@core/design-system/Toggle'
+import { ChallengeLayoutProps } from '@interfaces/ChallengeLayout.interfaces'
 
 export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) {
     const [response, setResponse] = useState('')
