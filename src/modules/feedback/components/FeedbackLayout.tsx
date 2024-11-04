@@ -2,39 +2,40 @@ import { ChevronRight } from 'lucide-react'
 
 import { Button } from "@core/design-system/Button"
 import { ContentContainer } from "@core/components/ContentContainer"
-
-interface FeedbackLink {
-    title: string
-    url: string
-}
-
-interface FeedbackLayoutProps {
-    challengeTitle: string
-    feedbackText: string
-    followUpLinks: FeedbackLink[]
-    onRetake: () => void
-    onGoHome: () => void
-}
+import { FeedbackLayoutProps } from '@interfaces/FeedbackLayout.interface'
 
 export default function FeedbackLayout({
     challengeTitle,
     feedbackText,
     followUpLinks,
     onRetake,
-    onGoHome
+    onGoHome,
+    onClose
 }: FeedbackLayoutProps) {
     return (
-        <div className="min-h-screen bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8">
+        <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6">Feedback</h1>
-
-                <ContentContainer variant="single-content" className="mb-8">
-                    <h2 className="text-xl font-bold mb-2">{challengeTitle}</h2>
-                    <p className="text-gray-300">{feedbackText}</p>
+                <div className="w-full flex justify-between mb-4">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6">Feedback</h1>
+                    <Button
+                        variant="ghost"
+                        onClick={onClose}
+                    >
+                        X
+                    </Button>
+                </div>
+                <ContentContainer
+                    variant="single-content"
+                    className='mb-6'
+                >
+                    <h3 className="text-base font-semibold text-primary">{challengeTitle}</h3>
+                    <p className="text-lg mb-4">
+                        {feedbackText}
+                    </p>
                 </ContentContainer>
 
                 <div className="mb-8">
-                    <h3 className="text-lg font-semibold mb-4">Follow-up Resources</h3>
+                    <h3 className="text-lg font-semibold mb-4">Refuerza con estas clases</h3>
                     {followUpLinks.map((link, index) => (
                         <ContentContainer
                             key={index}
@@ -49,7 +50,7 @@ export default function FeedbackLayout({
                                     href={link.url}
                                     className="text-[#06E98A] hover:underline inline-flex items-center"
                                 >
-                                    Take me there
+                                    Repasar clase
                                     <ChevronRight className="w-4 h-4 ml-1" />
                                 </a>
                             </div>
@@ -59,10 +60,10 @@ export default function FeedbackLayout({
 
                 <div className="flex flex-col sm:flex-row gap-4">
                     <Button onClick={onRetake} variant="outline" className="flex-1">
-                        Retake Challenge
+                        Intentar de nuevo
                     </Button>
                     <Button onClick={onGoHome} className="flex-1">
-                        Go to Home
+                        Volver al inicio
                     </Button>
                 </div>
             </div>

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import curso1 from '@/assets/curso-conversacional.png';
 import curso2 from '@/assets/course-english.png';
 import curso3 from '@/assets/curso-java.png';
+import siriusImage from '@/assets/sirius.png'; // Adjust the path as needed
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 import ChallengeCard from './CallengeCard';
-import { Challenge } from '@interfaces/ChallengeCard.interface';
+import { Challenge } from '@interfaces/Shared.interface';
 import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
+import Loader from '@/modules/core/components/Loader';
 
 
 const challenges: Challenge[] = [
@@ -22,17 +24,33 @@ const ChallengesAvailable = () => {
 
     const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback'>('challenge')
 
-    /*
-    const handleCloseDialog = (dialogOpen: boolean) => {
-        setOpenDialog(dialogOpen);
-        //   setSelectedChallenge(null);
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setSelectedChallenge(null);
+        setDialogStatus('challenge');
+    }
+
+    const handleChallengeSubmit = () => {
+        console.log('Challenge Submitted');
+        setDialogStatus('loading');
+        setTimeout(() => {
+            setDialogStatus('feedback');
+            console.log('Feedback Received');
+        }, 2000);
     };
-    */
+
 
     const handleCardClick = (id: string | number) => {
         setOpenDialog(true);
         setSelectedChallenge(challenges.find((challenge) => challenge.id === id) || null);
     }
+
+    const handleRetry = () => {
+        setDialogStatus('challenge');
+        setOpenDialog(true);
+    }
+
+
 
     return (
         <div className="p-4">
@@ -53,18 +71,19 @@ const ChallengesAvailable = () => {
             {openDialog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
-                        {dialogStatus === 'challenge' && (<ChallengeLayout setModalOpen={setOpenDialog} selectedChallenge={selectedChallenge} />)}
-                        {dialogStatus === 'loading' && (<div>loading</div>)}
+                        {dialogStatus === 'challenge' && (<ChallengeLayout onClose={handleCloseDialog} selectedChallenge={selectedChallenge} onSubmit={handleChallengeSubmit} />)}
+                        {dialogStatus === 'loading' && (<Loader text="Estamos procesando tu respuesta..." image={siriusImage} />)}
                         {dialogStatus === 'feedback' && (<FeedbackLayout
-                            challengeTitle="Challenge Title"
+                            onClose={handleCloseDialog}
+                            challengeTitle={selectedChallenge?.title || ''}
                             feedbackText="Feedback Text"
                             followUpLinks={[
                                 { title: "Link 1", url: "#" },
                                 { title: "Link 2", url: "#" },
                                 { title: "Link 3", url: "#" },
                             ]}
-                            onRetake={() => console.log('Retake')}
-                            onGoHome={() => console.log('Go Home')}
+                            onRetake={handleRetry}
+                            onGoHome={handleCloseDialog}
                         />)}
                     </div>
                 </div>

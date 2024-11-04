@@ -9,7 +9,7 @@ import { ToggleGroup, ToggleGroupItem } from '@core/design-system/Toggle'
 import { ChallengeLayoutProps } from '@interfaces/ChallengeLayout.interfaces'
 import { ContentContainer } from '@/modules/core/components/ContentContainer'
 
-export default function ChallengeLayout({ setModalOpen, selectedChallenge }: ChallengeLayoutProps) {
+export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }: ChallengeLayoutProps) {
     const [response, setResponse] = useState('')
     const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
@@ -24,6 +24,7 @@ export default function ChallengeLayout({ setModalOpen, selectedChallenge }: Cha
             console.log('Submitted text response:', response)
             // Here will we send the text response and wait for feedback
         }
+        onSubmit()
     }
 
     const handleAudioRecorded = (blob: Blob) => {
@@ -39,7 +40,7 @@ export default function ChallengeLayout({ setModalOpen, selectedChallenge }: Cha
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6">Challenge</h1>
                     <Button
                         variant="ghost"
-                        onClick={() => setModalOpen(false)}
+                        onClick={onClose}
                     >
                         X
                     </Button>
