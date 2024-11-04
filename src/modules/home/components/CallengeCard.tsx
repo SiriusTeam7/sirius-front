@@ -21,8 +21,8 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ id, title, icon, color, o
             }}
             className={`flex flex-row gap-2 items-center p-4 rounded-lg shadow-md w-full h-40 sm:h-40 cursor-pointer ${color}`}
             style={{
-                minWidth: '200px',  // Ancho mínimo para móviles
-                minHeight: '160px', // Altura mínima para móviles
+                minWidth: '200px',  
+                minHeight: '160px', 
             }}
         >
             <img

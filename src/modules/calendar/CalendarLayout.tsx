@@ -36,10 +36,10 @@ const CalendarLayout = () => {
 
 
     return (
-        <div className="p-4">
-            <h2 className="title-large text-center sm:text-left">Proceso memoria espaciada</h2>
-            <div className="flex flex-col sm:flex-row p-4 space-y-4 sm:space-y-0 sm:space-x-4">
-                <div className="w-full sm:w-3/4 p-4 rounded-lg bg-white shadow-md">
+        <div className="md:p-4">
+            <h2 className="title-large text-center my-2 sm:text-left">Proceso memoria espaciada</h2>
+            <div className="flex flex-col sm:flex-row sm:p-2 md:p-4 space-y-4 sm:space-y-0 sm:space-x-4">
+                <div className="w-full sm:w-2/3 md:p-4 rounded-lg bg-white shadow-md">
                     <h2 className="text-2xl font-bold mb-4 text-center sm:text-left">Calendario</h2>
                     <div className="h-80 sm:h-96 flex items-center justify-center text-gray-500">
                         <Calendar
