@@ -32,7 +32,7 @@ const ChallengesAvailable = () => {
     return (
         <div className="p-3 sm:p-4">
             <h2 className="title-large text-center sm:text-left">Retos disponibles</h2>
-            <div className="flex space-x-3 sm:space-x-4 p-3 sm:p-5 overflow-x-auto">
+            <div className="flex flex-col sm:flex-row gap-4 p-3 sm:p-5 overflow-x-auto">
                 {challenges.map((challenge) => (
                     <ChallengeCard
                         id={challenge.id}
