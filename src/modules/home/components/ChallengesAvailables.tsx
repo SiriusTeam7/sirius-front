@@ -4,9 +4,10 @@ import curso2 from '@/assets/course-english.png';
 import curso3 from '@/assets/curso-java.png';
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 import ChallengeCard from './CallengeCard';
+import { Challenge } from '@interfaces/ChallengeCard.interface';
 
 
-const challenges = [
+const challenges: Challenge[] = [
     { id: 1, title: 'Curso: Conversaciones dificiles', icon: curso1, color: 'bg-[#CE3A40]' },
     { id: 2, title: 'Curso: Inglés básico', icon: curso2, color: 'bg-[#F3B3DA]' },
     { id: 3, title: 'Curso: Java', icon: curso3, color: 'bg-[#444C65]' },
@@ -15,19 +16,19 @@ const challenges = [
 
 const ChallengesAvailable = () => {
     const [openDialog, setOpenDialog] = useState(false);
+    const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
+
     /*
-    const [selectedChallenge, setSelectedChallenge] = useState(null);
-    
     const handleCloseDialog = (dialogOpen: boolean) => {
         setOpenDialog(dialogOpen);
         //   setSelectedChallenge(null);
     };
     */
 
-    const handleCardClick = () => {
-        // setSelectedChallenge(challenge);
+    const handleCardClick = (id: string | number) => {
         setOpenDialog(true);
-    };
+        setSelectedChallenge(challenges.find((challenge) => challenge.id === id) || null);
+    }
 
     return (
         <div className="p-4">
@@ -44,14 +45,14 @@ const ChallengesAvailable = () => {
                     />
                 ))}
 
-                {openDialog && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
-                            <ChallengeLayout setModalOpen={setOpenDialog} />
-                        </div>
-                    </div>
-                )}
             </div>
+            {openDialog && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
+                        <ChallengeLayout setModalOpen={setOpenDialog} selectedChallenge={selectedChallenge} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

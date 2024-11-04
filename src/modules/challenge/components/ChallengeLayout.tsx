@@ -7,8 +7,9 @@ import { Button } from "@core/design-system/Button"
 import { Textarea } from "@core/design-system/TextArea"
 import { ToggleGroup, ToggleGroupItem } from '@core/design-system/Toggle'
 import { ChallengeLayoutProps } from '@interfaces/ChallengeLayout.interfaces'
+import { ContentContainer } from '@/modules/core/components/ContentContainer'
 
-export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) {
+export default function ChallengeLayout({ setModalOpen, selectedChallenge }: ChallengeLayoutProps) {
     const [response, setResponse] = useState('')
     const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
@@ -28,11 +29,13 @@ export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) 
         setAudioBlob(blob)
     }
 
+    const isSubmitDisabled = (inputMode === 'text' && !response) || (inputMode === 'audio' && !audioBlob)
+
     return (
-        <div className="min-h-screen bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8">
+        <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg">
             <div className="max-w-4xl mx-auto">
                 <div className="w-full flex justify-between mb-4">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6">Challenge</h1>
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6">Challenge</h1>
                     <Button
                         variant="ghost"
                         onClick={() => setModalOpen(false)}
@@ -40,14 +43,21 @@ export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) 
                         X
                     </Button>
                 </div>
-                <div className="bg-[#1E2329] rounded-lg p-6 mb-8">
-                    <p className="text-lg md:text-xl mb-4">
-                        Describe a situation where you had to solve a complex problem. What was your approach, and what was the outcome?
-                    </p>
-                    <div className="inline-block bg-[#06E98A] text-[#13161D] text-sm font-bold px-3 py-1 rounded-full">
-                        Problem Solving
-                    </div>
-                </div>
+                {selectedChallenge && (
+                    <ContentContainer
+                        variant="img-content"
+                        className='mb-6'
+                        image={<img src={selectedChallenge.icon} alt={selectedChallenge.title} className="w-16 h-16 rounded-lg mr-4 object-cover" />}
+                    >
+                        <h3 className="text-base font-semibold text-primary">{selectedChallenge.title}</h3>
+                        <p className="text-lg mb-4">
+                            Describe a situation where you had to solve a complex problem. What was your approach, and what was the outcome?
+                        </p>
+                        <div className="inline-block bg-[#06E98A] text-[#13161D] text-sm font-bold px-3 py-1 rounded-full">
+                            Problem Solving
+                        </div>
+                    </ContentContainer>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="flex justify-center mb-4">
                         <ToggleGroup type="single" value={inputMode} onValueChange={(value) => value && setInputMode(value as 'text' | 'audio')}>
@@ -73,7 +83,7 @@ export default function ChallengeLayout({ setModalOpen }: ChallengeLayoutProps) 
                             />
                         </div>
                     )}
-                    <Button type="submit" size="lg" variant="secondary">
+                    <Button type="submit" size="lg" variant="secondary" disabled={isSubmitDisabled}>
                         Enviar
                     </Button>
                 </form>
