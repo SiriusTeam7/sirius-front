@@ -9,7 +9,6 @@ function MainLayout() {
 
     // Fetch all challenges and print them, using the useApiHooks
     const { data: challengesData } = useGetAllChallenges();
-    console.log(challengesData, 'challengesData');
     return (
 
 
