@@ -8,6 +8,7 @@ import ChallengeCard from './CallengeCard';
 import { Challenge } from '@interfaces/Shared.interface';
 import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
 import Loader from '@/modules/core/components/Loader';
+import { useGetAllChallenges } from '@/modules/core/hooks/useApiHooks';
 
 
 const challenges: Challenge[] = [
@@ -20,6 +21,10 @@ const challenges: Challenge[] = [
 const ChallengesAvailable = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
+
+    // Fetch all challenges and print them, using the useApiHooks
+    const { data: challengesData } = useGetAllChallenges();
+    console.log(challengesData, 'challengesData');
 
 
     const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback'>('challenge')
