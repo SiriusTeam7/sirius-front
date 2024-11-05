@@ -12,8 +12,8 @@ import { GetFeedbackRequest } from '@/modules/core/interfaces/Api.interface';
 const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
-    const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback'>('challenge')
-    const mutation = useGetFeedback();
+    const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback' | 'error'>('challenge')
+    const mutation = useGetFeedback(setDialogStatus);
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -22,7 +22,6 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
     }
 
     const handleChallengeSubmit = (inputType: string, response: string | Blob) => {
-        // Call API to submit the challenge
         console.log('Submitted response:', response);
         setDialogStatus('loading');
 
@@ -44,10 +43,6 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
             };
             mutation.mutate(feedbackRequest);
         }
-
-        setDialogStatus('feedback');
-
-
 
     };
 
@@ -80,8 +75,8 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
                 ))}
             </div>
             {openDialog && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="modal-container rounded-lg shadow-lg w-full max-w-md">
+                <div className="fixed inset-0 flex items-center mt-10 justify-center bg-black bg-opacity-50 z-50">
+                    <div className="modal-container rounded-lg shadow-lg w-full p-3 max-w-md max-h-[90vh] overflow-y-auto">
                         {dialogStatus === 'challenge' && (<ChallengeLayout onClose={handleCloseDialog} selectedChallenge={selectedChallenge} onSubmit={handleChallengeSubmit} />)}
                         {dialogStatus === 'loading' && (<Loader text="Estamos procesando tu respuesta..." image={siriusImage} />)}
                         {dialogStatus === 'feedback' && (<FeedbackLayout
@@ -96,6 +91,8 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
                             onRetake={handleRetry}
                             onGoHome={handleCloseDialog}
                         />)}
+                        {dialogStatus === 'error' && (<Loader text="Ha ocurrido un error! Por favor intentalo nuevamente" image={siriusImage} />)}
+
                     </div>
                 </div>
             )}

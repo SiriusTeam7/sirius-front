@@ -31,22 +31,25 @@ export function useGetChallenge(): UseMutationResult<
   });
 }
 
-export function useGetFeedback(): UseMutationResult<
+export function useGetFeedback(
+  setDialogStatus: React.Dispatch<React.SetStateAction<'challenge' | 'loading' | 'feedback' |'error'>>
+): UseMutationResult<
   Feedback,
   Error,
   GetFeedbackRequest
 > {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: GetFeedbackRequest) =>
       getFeedbackApi(data).then((res) => res.data),
     onError: (error) => {
+      setDialogStatus('error')
       console.error("Error fetching feedback:", error);
     },
     onSuccess: (data) => {
       console.log("🚀 ~ data:", data);
-      const queryClient = useQueryClient();
-
       queryClient.setQueryData(["feedback", data], data);
+      setDialogStatus('feedback')
     },
   });
 }
