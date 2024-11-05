@@ -1,10 +1,14 @@
 import Header from "@/modules/core/design-system/Header"
 import TitleBar from "@/modules/core/design-system/TitleBar"
 import ChallengesAvailable from "@/modules/home/components/ChallengesAvailables"
-import { ContentContainer } from "./ContentContainer"
 
+import { ContentContainer } from "./ContentContainer"
+import { useGetAllChallenges } from "../hooks/useApiHooks";
 
 function MainLayout() {
+
+    // Fetch all challenges and print them, using the useApiHooks
+    const { data: challengesData } = useGetAllChallenges();
     return (
 
 
@@ -22,14 +26,21 @@ function MainLayout() {
                     variant="single-content"
                 >
                     <p className="text-sm">Tienes disponible</p>
-                    <h2 className="font-semibold">3 retos</h2>
+                    <h2 className="font-semibold">{challengesData?.length || 0} retos</h2>
                 </ContentContainer>
             </section>
             <hr className="my-4 border-t border-gray-300" />
 
 
 
-            <ChallengesAvailable />
+            <ChallengesAvailable challenges={challengesData} />
+            {
+                /*
+                <hr className="my-4 border-t border-gray-300" />
+                <CalendarLayout />
+
+                */
+            }
 
 
         </div>

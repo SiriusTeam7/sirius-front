@@ -16,7 +16,7 @@ export default function FeedbackLayout({
         <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg">
             <div className="max-w-4xl mx-auto">
                 <div className="w-full flex justify-between mb-4">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6">Feedback</h1>
+                    <h1 className="text-1xl md:text-3xl lg:text-4xl font-black mb-6">Feedback</h1>
                     <Button
                         variant="ghost"
                         onClick={onClose}

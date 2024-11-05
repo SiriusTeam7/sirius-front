@@ -11,6 +11,7 @@ export default defineConfig({
       "@home": path.resolve(__dirname, "./src/modules/home"),
       "@auth": path.resolve(__dirname, "./src/modules/auth"),
       "@interfaces": path.resolve(__dirname, "./src/modules/core/interfaces"),
+      "@config": path.resolve(__dirname, "./src/modules/core/config"),
     },
   },
   plugins: [react()],

@@ -19,7 +19,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ id, title, icon, color, o
                     onClick(id);
                 }
             }}
-            className={`flex flex-row gap-2 items-center p-4 rounded-lg shadow-md w-full h-40 sm:h-40 cursor-pointer ${color}`}
+            className={`flex flex-row gap-2 items-center p-4 rounded-lg shadow-md w-full h-40 sm:h-40 cursor-pointer bg-[${color}]`}
             style={{
                 minWidth: '200px',  
                 minHeight: '160px', 
