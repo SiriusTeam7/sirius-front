@@ -4,5 +4,5 @@ export interface Challenge {
   course_title: string;
   text: string;
   icon: string;
-  color: string;
+  course_color: string;
 }

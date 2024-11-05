@@ -69,7 +69,7 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
                         key={challenge.id}
                         title={challenge.course_title}
                         icon={challenge.icon}
-                        color={challenge.color}
+                        color={challenge.course_color}
                         onClick={handleCardClick}
                     />
                 ))}
