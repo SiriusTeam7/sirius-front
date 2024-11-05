@@ -1,13 +1,8 @@
-import React, { forwardRef } from 'react'
-import { VariantProps } from 'class-variance-authority'
+import { forwardRef } from 'react'
+
 import { cn } from '@core/lib/utils'
 import { buttonVariants } from '@core/utils/buttonVariants'
-
-export interface ButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-    href?: string
-}
+import { ButtonProps } from '@interfaces/Button.interface'
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, href, ...props }, ref) => {

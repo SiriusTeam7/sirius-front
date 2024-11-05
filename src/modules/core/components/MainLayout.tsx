@@ -1,7 +1,7 @@
 import Header from "@/modules/core/design-system/Header"
 import TitleBar from "@/modules/core/design-system/TitleBar"
 import ChallengesAvailable from "@/modules/home/components/ChallengesAvailables"
-import CalendarLayout from "@/modules/calendar/CalendarLayout"
+import { ContentContainer } from "./ContentContainer"
 
 
 function MainLayout() {
@@ -11,28 +11,27 @@ function MainLayout() {
         <div className="bg-primary min-h-screen w-full mx-auto p-4 sm:p-6 lg:p-8">
             <Header />
             <TitleBar />
+            <section className="flex justify-center items-center gap-4 mt-4">
+                <ContentContainer
+                    variant="single-content"
+                >
+                    <p className="text-sm">Próximo reto en</p>
+                    <h2 className="font-semibold">7d</h2>
+                </ContentContainer>
+                <ContentContainer
+                    variant="single-content"
+                >
+                    <p className="text-sm">Tienes disponible</p>
+                    <h2 className="font-semibold">3 retos</h2>
+                </ContentContainer>
+            </section>
+            <hr className="my-4 border-t border-gray-300" />
+
+
+
             <ChallengesAvailable />
-            <div className="w-full h-px bg-gray-300 mt-4"></div>
-            <CalendarLayout />
-
-            { /* <ChallengeLayout />
-            {
 
 
-                /**
-                    <section className="mb-6">
-                        <h2 className="title-small">Retos de cursos actuales</h2>
-                        <button className="btn-secondary mt-2">Ya disponible</button>
-                    </section>
-        
-                    <section>
-                        <h2 className="title-small">Retos por escuelas</h2>
-                        <button className="btn-secondary mt-2">Ya disponible</button>
-                        <p>Ejemplo de P</p>
-                    </section>
-        
-                    */
-            }
         </div>
 
     )
