@@ -29,7 +29,8 @@
       "@core/*": ["src/modules/core/*"],
       "@interfaces/*": ["src/modules/core/interfaces/*"],
       "@home/*": ["src/modules/home/*"],
-      "@challenge/*": ["src/modules/challenge/*"]
+      "@challenge/*": ["src/modules/challenge/*"],
+      "@config/*": ["src/modules/core/config/*"]
     }
   },
   "include": ["src"],
