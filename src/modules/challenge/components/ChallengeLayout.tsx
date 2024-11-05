@@ -19,12 +19,11 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
         e.preventDefault()
         if (inputMode === 'audio') {
             console.log('Submitted audio response:', audioBlob)
-            // Here will we send the audio and expect the transcribed text response
+            onSubmit(inputMode, audioBlob!)
         } else {
             console.log('Submitted text response:', response)
-            // Here will we send the text response and wait for feedback
+            onSubmit(inputMode, response)
         }
-        onSubmit()
     }
 
     const handleAudioRecorded = (blob: Blob) => {
@@ -34,7 +33,7 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
     const isSubmitDisabled = (inputMode === 'text' && !response) || (inputMode === 'audio' && !audioBlob)
 
     return (
-        <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg">
+        <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg max-h-dvh overflow-y-auto">
             <div className="max-w-4xl mx-auto">
                 <div className="w-full flex justify-between mb-4">
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6">Challenge</h1>
@@ -49,11 +48,11 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                     <ContentContainer
                         variant="img-content"
                         className='mb-6'
-                        image={<img src={selectedChallenge.icon} alt={selectedChallenge.title} className="w-16 h-16 rounded-lg mr-4 object-cover" />}
+                        image={<img src={selectedChallenge.icon} alt={selectedChallenge.course_title} className="w-16 h-16 rounded-lg mr-4 object-cover" />}
                     >
-                        <h3 className="text-base font-semibold text-primary">{selectedChallenge.title}</h3>
+                        <h3 className="text-base font-semibold text-primary">{selectedChallenge.course_title}</h3>
                         <p className="text-lg mb-4">
-                            Describe a situation where you had to solve a complex problem. What was your approach, and what was the outcome?
+                            {selectedChallenge.text}
                         </p>
                         <div className="inline-block bg-[#06E98A] text-[#13161D] text-sm font-bold px-3 py-1 rounded-full">
                             Problem Solving

@@ -3,6 +3,7 @@ import {
   useQuery,
   UseMutationResult,
   UseQueryResult,
+  useQueryClient,
 } from "@tanstack/react-query";
 import {
   getChallengeApi,
@@ -12,9 +13,9 @@ import {
 import {
   GetChallengeRequest,
   GetFeedbackRequest,
-  Challenge,
   Feedback,
 } from "@interfaces/Api.interface";
+import { Challenge } from "../interfaces/Shared.interface";
 
 export function useGetChallenge(): UseMutationResult<
   Challenge,
@@ -40,6 +41,12 @@ export function useGetFeedback(): UseMutationResult<
       getFeedbackApi(data).then((res) => res.data),
     onError: (error) => {
       console.error("Error fetching feedback:", error);
+    },
+    onSuccess: (data) => {
+      console.log("🚀 ~ data:", data);
+      const queryClient = useQueryClient();
+
+      queryClient.setQueryData(["feedback", data], data);
     },
   });
 }
