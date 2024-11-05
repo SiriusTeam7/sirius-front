@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { cn } from '@core/lib/utils'
-import { buttonVariants } from '@core/utils/buttonVariants'
+import { buttonVariants } from '@/modules/core/lib/buttonVariants'
 import { ButtonProps } from '@interfaces/Button.interface'
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
