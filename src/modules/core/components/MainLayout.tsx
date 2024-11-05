@@ -2,7 +2,6 @@ import Header from "@/modules/core/design-system/Header"
 import TitleBar from "@/modules/core/design-system/TitleBar"
 import ChallengesAvailable from "@/modules/home/components/ChallengesAvailables"
 import { ContentContainer } from "./ContentContainer"
-import CalendarLayout from "@/modules/calendar/CalendarLayout"
 
 
 function MainLayout() {
