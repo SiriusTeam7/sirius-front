@@ -62,7 +62,7 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
     return (
         <div className="p-3 sm:p-4">
             <h2 className="title-large text-center sm:text-left">Retos disponibles</h2>
-            <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
                 {challenges?.map((challenge) => (
                     <ChallengeCard
                         id={challenge.id}
