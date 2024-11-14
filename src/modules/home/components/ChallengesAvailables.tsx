@@ -22,7 +22,6 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
     }
 
     const handleChallengeSubmit = (inputType: string, response: string | Blob) => {
-        console.log('Submitted response:', response);
         setDialogStatus('loading');
 
 
@@ -35,11 +34,13 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
             };
             mutation.mutate(feedbackRequest);
         } else if (inputType === 'audio') {
+
+            const audioFile = new File([response], 'response.mp3', { type: 'audio/mp3' })
             const feedbackRequest: GetFeedbackRequest = {
                 student_id: 1,
                 challenge_id: selectedChallenge?.id as number,
                 answer_type: 'audio',
-                answer_audio: response as Blob,
+                answer_audio: audioFile,
             };
             mutation.mutate(feedbackRequest);
         }
