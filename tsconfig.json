@@ -15,6 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "types" : ["jest"],
 
     /* Linting */
     "strict": true,
@@ -33,6 +34,6 @@
       "@config/*": ["src/modules/core/config/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/setupTests.ts", "__mocks__/fileMock.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
