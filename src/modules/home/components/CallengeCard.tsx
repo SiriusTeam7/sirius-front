@@ -1,4 +1,3 @@
-import React from 'react';
 
 interface ChallengeCardProps {
     id: string | number;
@@ -8,7 +7,7 @@ interface ChallengeCardProps {
     onClick: (id: string | number) => void;
 }
 
-const ChallengeCard: React.FC<ChallengeCardProps> = ({ id, title, icon, color, onClick }) => {
+const ChallengeCard: React.FC<ChallengeCardProps> = ({ id, title, icon, color, onClick } : ChallengeCardProps) => {
     return (
         <div
             role="button"
