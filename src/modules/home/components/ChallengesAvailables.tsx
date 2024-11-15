@@ -1,4 +1,4 @@
-import {siriusImage} from '@/assets/images';
+import { siriusImage } from '@/assets/images';
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 import ChallengeCard from './CallengeCard';
 import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';

@@ -8,9 +8,8 @@ export function useAudioRecorder(onAudioRecorded: (blob: Blob) => void) {
     const mediaRecorderRef = useRef<MediaRecorder | null>(null)
     const chunksRef = useRef<Blob[]>([])
 
-
-
-    const startRecording = async () => {
+    const startRecording = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
             mediaRecorderRef.current = new MediaRecorder(stream)
@@ -20,7 +19,7 @@ export function useAudioRecorder(onAudioRecorded: (blob: Blob) => void) {
                 }
             }
             mediaRecorderRef.current.onstop = () => {
-                const blob = new Blob(chunksRef.current, { type: 'audio/webm' })
+                const blob = new Blob(chunksRef.current, { type: 'audio/mp3' })
                 setAudioBlob(blob)
                 onAudioRecorded(blob)
                 chunksRef.current = []
@@ -32,21 +31,24 @@ export function useAudioRecorder(onAudioRecorded: (blob: Blob) => void) {
         }
     }
 
-    const stopRecording = () => {
+    const stopRecording = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         if (mediaRecorderRef.current && isRecording) {
             mediaRecorderRef.current.stop()
             setIsRecording(false)
         }
     }
 
-    const playRecording = () => {
+    const playRecording = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         if (audioBlob) {
             const audio = new Audio(URL.createObjectURL(audioBlob))
             audio.play()
         }
     }
 
-    const resetRecording = () => {
+    const resetRecording = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         setAudioBlob(null)
         chunksRef.current = []
     }
