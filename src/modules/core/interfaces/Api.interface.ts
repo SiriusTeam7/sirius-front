@@ -14,7 +14,7 @@ interface GetFeedbackAudioRequest {
   student_id: number;
   challenge_id: number;
   answer_type: string;
-  answer_audio: Blob;
+  answer_audio: File;
 }
 
 export type GetFeedbackRequest =
