@@ -1,5 +1,4 @@
 
-// src/pages/Login.tsx
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '@/store/authSlice';
