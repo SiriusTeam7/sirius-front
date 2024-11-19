@@ -42,7 +42,6 @@ function MainLayout() {
                 */
             }
 
-
         </div>
 
     )
