@@ -1,6 +1,6 @@
 import {siriusImage} from '@/assets/images';
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
-import ChallengeCard from './CallengeCard';
+import ChallengeCard from '../../core/components/CallengeCard';
 import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
 import Loader from '@/modules/core/components/Loader';
 import { ChallengesAvailableProps } from '@/modules/core/interfaces/ChallengesAvailable.interface';
