@@ -4,19 +4,25 @@ import { ToggleGroup, ToggleGroupItem } from "@/modules/core/design-system/Toggl
 import { Editor, EditorProps } from "@monaco-editor/react"
 import * as monaco from 'monaco-editor'
 import { Button } from "@/modules/core/design-system/Button"
+import { useCompiler } from "../hooks/useCompiler"
 
 const defaultJsCode = `function greet(name) {
     console.log(\`Hello, \${name}!\`);
     // Tu código aquí 👈
   }
-  
-  greet('World');`
+`
 
 const defaultPyCode = `def greet(name):
       print(f"Hello, {name}!")
       # Tu código aquí 👈
-  
-  greet("World")`
+`
+
+// Mock mutation function (replace with your actual API call)
+const submitCode = async (code: string) => {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log('Code submitted:', code)
+    return { success: true, message: 'Code submitted successfully 🚀' }
+}
 
 export default function CodeEditor() {
     const [language, setLanguage] = useState<'javascript' | 'python'>('javascript')
@@ -25,7 +31,10 @@ export default function CodeEditor() {
         python: defaultPyCode,
     })
     const [syntaxError, setSyntaxError] = useState<string | null>(null)
+    const [executionResult, setExecutionResult] = useState<boolean | null>(null)
     const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+
+    const { runCode, pyodideReady } = useCompiler({ onCodeExecuted: setExecutionResult });
 
     const handleEditorChange: EditorProps['onChange'] = (value) => {
         if (value !== undefined) {
@@ -35,12 +44,14 @@ export default function CodeEditor() {
             }))
             // Clear syntax error when code changes
             setSyntaxError(null)
+            setExecutionResult(null)
         }
     }
 
     const toggleLanguage = (newLanguage: 'javascript' | 'python') => {
         setLanguage(newLanguage)
         setSyntaxError(null)
+        setExecutionResult(null)
     }
 
     const handleEditorDidMount: EditorProps['onMount'] = (editor) => {
@@ -58,10 +69,8 @@ export default function CodeEditor() {
         if (editorRef.current) {
             const model = editorRef.current.getModel()
             if (model) {
-                console.log("🚀 ~ checkForSyntaxErrors ~ model:", model)
                 const markers = monaco.editor.getModelMarkers({ resource: model.uri })
                 const errors = markers.filter(marker => marker.severity === monaco.MarkerSeverity.Error)
-                console.log("🚀 ~ checkForSyntaxErrors ~ markers:", markers)
                 if (errors.length > 0) {
                     setSyntaxError(`Syntax error: ${errors[0].message}`)
                     return true
@@ -71,17 +80,38 @@ export default function CodeEditor() {
         return false
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (checkForSyntaxErrors()) {
             return
         }
-        console.log('Submitted code:', code[language])
+
+        if (language === 'python' && !pyodideReady) {
+            setSyntaxError('Python environment is not ready yet. Please wait a moment and try again.')
+            return
+        }
+
+        const success = await runCode({
+            code: code[language],
+            language,
+            testCases: [
+                { input: ['World'], expectedOutput: 'Hello, World!' },
+                { input: ['OpenAI'], expectedOutput: 'Hello, OpenAI!' },
+            ],
+        })
+
+        if (success) {
+            setExecutionResult(true)
+            submitCode(code[language])
+        } else {
+            setExecutionResult(false)
+        }
     }
 
     return (
         <div className="w-full max-w-4xl mx-auto">
             <div>
                 <h2 className="text-2xl font-bold">Monaco Code Editor</h2>
+                <p className="text-gray-500">Pydiode ready {pyodideReady ? '✅' : '❌'}</p>
                 <ToggleGroup
                     type="single"
                     value={language}
@@ -127,6 +157,12 @@ export default function CodeEditor() {
                     <div className="text-red-500 text-sm mt-2">{syntaxError}</div>
                 )
             }
+
+            {executionResult !== null && (
+                <div className="mt-4">
+                    {executionResult ? "Code executed successfully!" : "Code execution failed."}
+                </div>
+            )}
 
             <Button onClick={handleSubmit} disabled={!!syntaxError} className="mt-4">Submit</Button>
 
