@@ -4,6 +4,8 @@ import {
   Feedback,
   GetChallengeRequest,
   GetFeedbackRequest,
+  LoginRequest,
+  LoginResponse,
 } from "@interfaces/Api.interface";
 import { Challenge } from "../interfaces/Shared.interface";
 
@@ -14,6 +16,11 @@ const apiClient: AxiosInstance = axios.create({
     Authorization: `Token ${API_AUTH_TOKEN}`,
   },
 });
+
+export const getLoginApi = (
+  data: LoginRequest
+): Promise<AxiosResponse<LoginResponse>> =>
+  apiClient.post<LoginResponse>("/login/", data);
 
 export const getChallengeApi = (
   data: GetChallengeRequest
