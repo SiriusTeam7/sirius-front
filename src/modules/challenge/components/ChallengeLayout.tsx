@@ -1,4 +1,3 @@
-import { useState } from 'react'
 
 import { AudioRecorder } from './AudioRecorder'
 import { Mic, Type } from 'lucide-react'
@@ -8,30 +7,20 @@ import { Textarea } from "@core/design-system/TextArea"
 import { ToggleGroup, ToggleGroupItem } from '@core/design-system/Toggle'
 import { ChallengeLayoutProps } from '@interfaces/ChallengeLayout.interfaces'
 import { ContentContainer } from '@/modules/core/components/ContentContainer'
+import { useStateChallenge } from '../hooks/useStateChallange'
 import CodeEditor from './CodeEditor'
 
 export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }: ChallengeLayoutProps) {
-    const [response, setResponse] = useState('')
-    const [inputMode, setInputMode] = useState<'text' | 'audio' | 'code'>('code')
-    const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
 
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (inputMode === 'audio') {
-            console.log('Submitted audio response:', audioBlob)
-            onSubmit(inputMode, audioBlob!)
-        } else {
-            console.log('Submitted text response:', response)
-            onSubmit(inputMode, response)
-        }
-    }
-
-    const handleAudioRecorded = (blob: Blob) => {
-        setAudioBlob(blob)
-    }
-
-    const isSubmitDisabled = (inputMode === 'text' && !response) || (inputMode === 'audio' && !audioBlob)
+    const {
+        inputMode,
+        setInputMode,
+        handleSubmit,
+        handleAudioRecorded,
+        response,
+        setResponse,
+        isSubmitDisabled,
+    } = useStateChallenge(onSubmit)
 
     return (
         <div className="bg-[#13161D] text-white font-['Roboto',sans-serif] p-4 md:p-8 rounded-lg max-h-dvh overflow-y-auto">
@@ -60,9 +49,9 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                         </div>
                     </ContentContainer>
                 )}
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" data-testid="challenge-form">
                     <div className="flex justify-center mb-4">
-                        <ToggleGroup type="single" value={inputMode} onValueChange={(value) => value && setInputMode(value as 'text' | 'audio')}>
+                        <ToggleGroup type="single" value={inputMode} onValueChange={(value: string) => value && setInputMode(value as 'text' | 'audio')}>
                             <ToggleGroupItem value="text" aria-label="Text input mode">
                                 <Type className="h-4 w-4" />
                             </ToggleGroupItem>
@@ -81,7 +70,7 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                             <Textarea
                                 id="response"
                                 value={response}
-                                onChange={(e) => setResponse(e.target.value)}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setResponse(e.target.value)}
                                 placeholder="¿Cómo resuelves este problema?"
                                 className="w-full h-48"
                             />
