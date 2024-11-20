@@ -7,6 +7,7 @@ import routes from '../assets/svgexport-6.svg'
 import progress from '../assets/svgexport-8.svg'
 import chat from '../assets/svgexport-9.svg'
 import completedIcon from '../assets/checkgreen.svg'
+import arrowRigth from '../assets/svgexport-18.svg'
 
 export {Course1,
      Course2,
@@ -16,4 +17,6 @@ export {Course1,
      routes, 
      progress, 
      chat,
-     completedIcon}
+     completedIcon,
+     arrowRigth
+}

@@ -1,15 +1,15 @@
-import {siriusImage} from '@/assets/images';
-import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
-import ChallengeCard from '../../core/components/CallengeCard';
-import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
-import Loader from '@/modules/core/components/Loader';
-import { ChallengesAvailableProps } from '@/modules/core/interfaces/ChallengesAvailable.interface';
-import { useChallenges } from '@/modules/home/hooks/useChallenges';
+
+import { useGetAllChallenges } from '@/modules/core/hooks/useApiHooks';
+import { useLocation } from 'react-router-dom';
 
 
-const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
+const ChallengesAvailable = () => {
 
-    const {
+    const location = useLocation();
+    const { course } = location.state || {}; 
+    const { data: challengesData } = useGetAllChallenges();
+
+   /* const { 
         openDialog,
         selectedChallenge,
         dialogStatus,
@@ -18,13 +18,13 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
         handleChallengeSubmit,
         handleCardClick,
         handleRetry,
-    } = useChallenges(challenges);
+    } = useChallenges(challengesData);*/
 
     return (
         <div className="p-3 sm:p-4">
-            <h2 className="title-large text-center sm:text-left">Retos disponibles</h2>
+            <h2 className="title-large text-center sm:text-left">Retos de: {course.course_title}</h2>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
-                {challenges?.map((challenge) => (
+                {/*challenges?.map((challenge) => (
                     <ChallengeCard
                         id={challenge.id}
                         key={challenge.id}
@@ -33,9 +33,9 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
                         color={challenge.course_color}
                         onClick={handleCardClick}
                     />
-                ))}
+                ))*/}
             </div>
-            {openDialog && (
+            {/*openDialog && (
                 <div className="fixed inset-0 flex items-center mt-10 justify-center bg-black bg-opacity-50 z-50">
                     <div className="modal-container rounded-lg shadow-lg w-full p-3 max-w-md max-h-[90vh] overflow-y-auto">
                         {dialogStatus === 'challenge' && (<ChallengeLayout onClose={handleCloseDialog} selectedChallenge={selectedChallenge} onSubmit={handleChallengeSubmit} />)}
@@ -56,7 +56,7 @@ const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
 
                     </div>
                 </div>
-            )}
+            )*/}
         </div>
     );
 };
