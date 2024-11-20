@@ -1,7 +1,6 @@
-import React from 'react';
 import { LoaderProps } from '../interfaces/Loader.interface';
 
-const Loader: React.FC<LoaderProps> = ({ text, image }) => {
+const Loader: React.FC<LoaderProps> = ({ text, image } : LoaderProps) => {
     return (
         <div className="flex flex-col items-center justify-center bg-[#13161D] text-white py-8 px-4 md:p-8 rounded-lg">
             <img

@@ -1,63 +1,24 @@
-import { useState } from 'react';
-import siriusImage from '@/assets/sirius.png'; // Adjust the path as needed
+import { siriusImage } from '@/assets/images';
 import ChallengeLayout from '@/modules/challenge/components/ChallengeLayout';
 import ChallengeCard from './CallengeCard';
-import { Challenge } from '@interfaces/Shared.interface';
 import FeedbackLayout from '@/modules/feedback/components/FeedbackLayout';
 import Loader from '@/modules/core/components/Loader';
 import { ChallengesAvailableProps } from '@/modules/core/interfaces/ChallengesAvailable.interface';
-import { useGetFeedback } from '@/modules/core/hooks/useApiHooks';
-import { GetFeedbackRequest } from '@/modules/core/interfaces/Api.interface';
+import { useChallenges } from '@/modules/home/hooks/useChallenges';
+
 
 const ChallengesAvailable = ({ challenges }: ChallengesAvailableProps) => {
-    const [openDialog, setOpenDialog] = useState(false);
-    const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
-    const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback' | 'error'>('challenge')
-    const mutation = useGetFeedback(setDialogStatus);
 
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-        setSelectedChallenge(null);
-        setDialogStatus('challenge');
-    }
-
-    const handleChallengeSubmit = (inputType: string, response: string | Blob) => {
-        console.log('Submitted response:', response);
-        setDialogStatus('loading');
-
-
-        if (inputType === 'text') {
-            const feedbackRequest: GetFeedbackRequest = {
-                student_id: 1,
-                challenge_id: selectedChallenge?.id as number,
-                answer_type: 'text',
-                answer_text: response as string,
-            };
-            mutation.mutate(feedbackRequest);
-        } else if (inputType === 'audio') {
-            const feedbackRequest: GetFeedbackRequest = {
-                student_id: 1,
-                challenge_id: selectedChallenge?.id as number,
-                answer_type: 'audio',
-                answer_audio: response as Blob,
-            };
-            mutation.mutate(feedbackRequest);
-        }
-
-    };
-
-
-    const handleCardClick = (id: string | number) => {
-        setOpenDialog(true);
-        setSelectedChallenge(challenges?.find((challenge) => challenge.id === id) || null);
-    }
-
-    const handleRetry = () => {
-        setDialogStatus('challenge');
-        setOpenDialog(true);
-    }
-
-
+    const {
+        openDialog,
+        selectedChallenge,
+        dialogStatus,
+        mutation,
+        handleCloseDialog,
+        handleChallengeSubmit,
+        handleCardClick,
+        handleRetry,
+    } = useChallenges(challenges);
 
     return (
         <div className="p-3 sm:p-4">
