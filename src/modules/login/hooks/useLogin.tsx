@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGetLogin } from "@/modules/core/hooks/useApiHooks";
 import { LoginRequest } from "@/modules/core/interfaces/Api.interface";
 
@@ -6,6 +7,7 @@ export function useLogin() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const { mutate, isError, isSuccess } = useGetLogin();
 
 
@@ -14,18 +16,19 @@ export function useLogin() {
       setIsLoading(true);
       const loginData: LoginRequest = { username, password };
       mutate(loginData);
+
       if (isSuccess) {
         console.log('Login exitoso')
         return true;
       } else {
         console.error('Error en el inicio de sesión')
       }
-
     } else {
-      console.error("Los campos de email y contraseña no deben estar vacíos");
+      setError("Por favor, llena todos los campos");
     }
     return false;
   };
+
 
   const validateSession = (): boolean => {
     // Check if cookies are present
@@ -62,5 +65,6 @@ export function useLogin() {
     isLoading,
     isError,
     isSuccess,
+    error,
   };
 }
