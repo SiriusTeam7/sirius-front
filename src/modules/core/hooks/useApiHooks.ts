@@ -31,11 +31,11 @@ export function useGetLogin(): UseMutationResult<
     mutationFn: async (data: LoginRequest) =>
       getLoginApi(data).then((res) => res.data),
     onSuccess: (data) => {
-      console.log('ENTRA A SUCCES', data)
       queryClient.setQueryData(["user", data], data);
     },
     onError: (error) => {
-      console.error("Error en el inicio de sesión:", error.message);
+      console.error("Error fetching login:", error);
+      queryClient.setQueryData(["user", null], null);
     },
   });
 }

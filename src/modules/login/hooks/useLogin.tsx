@@ -24,10 +24,11 @@ export function useLogin() {
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
-    } else {
-      setError("Error de autenticación");
+    } else if (isError) {
+        setIsLoading(false);
+        setError("Usuario o contraseña incorrectos. Intentalo de nuevo");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, isError,  navigate]);
 
   return {
     username,
