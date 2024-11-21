@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import { siriusImage, loading } from "@/assets/images";
 import { Button } from "../../core/design-system/Button";
 import { useLogin } from "../hooks/useLogin";
@@ -15,8 +14,6 @@ const Login = () => {
     setPassword,
     handleSubmit,
     isLoading,
-    isError,
-    isSuccess,
   } = useLogin();
 
   return (
