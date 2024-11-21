@@ -1,10 +1,21 @@
 import Sidebar from "@/modules/home/components/SideBar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import CourseAvailables from "@/modules/home/components/CourseAvailables";
+import { useQueryClient } from "@tanstack/react-query";
+import { LoginResponse } from "../interfaces/Api.interface";
+
 
 function MainLayout() {
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<LoginResponse>(["user"]);
+
+  if (!user) {
+    console.log("No user found, redirecting to login");
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="bg-primary min-h-screen w-full mx-auto flex  flex-col sm:flex-row">
       <Sidebar />

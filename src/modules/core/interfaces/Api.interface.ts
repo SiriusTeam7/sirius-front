@@ -31,7 +31,8 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  name: string;
-  csrftoken: string;
-  sessionid: string;
+  message: string;
+  user: {
+    student_id: number;
+  };
 }

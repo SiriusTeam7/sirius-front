@@ -7,7 +7,7 @@ const ChallengesAvailable = () => {
 
     const location = useLocation();
     const { course } = location.state || {}; 
-    const { data: challengesData } = useGetAllChallenges();
+  //  const { data: challengesData } = useGetAllChallenges();
 
    /* const { 
         openDialog,

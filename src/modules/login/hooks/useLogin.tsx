@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetLogin } from "@/modules/core/hooks/useApiHooks";
-import { LoginRequest } from "@/modules/core/interfaces/Api.interface";
+import { LoginRequest, LoginResponse } from "@/modules/core/interfaces/Api.interface";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function useLogin() {
   const [username, setUsername] = useState<string>("");
@@ -10,6 +11,8 @@ export function useLogin() {
   const [error, setError] = useState<string>("");
   const { mutate, isError, isSuccess } = useGetLogin();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
 
   const handleSubmit = () => {
     if (username && password) {
@@ -23,7 +26,9 @@ export function useLogin() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+    //  navigate("/");
+      const user = queryClient.getQueryData<LoginResponse>(["user"]);
+      console.log("🚀 ~ user:", user);
     } else if (isError) {
         setIsLoading(false);
         setError("Usuario o contraseña incorrectos. Intentalo de nuevo");

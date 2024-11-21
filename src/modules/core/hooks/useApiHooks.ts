@@ -28,8 +28,10 @@ export function useGetLogin(): UseMutationResult<
 > {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: LoginRequest) =>
-      getLoginApi(data).then((res) => res.data),
+    mutationFn: async (data: LoginRequest)=> {
+      const response = await getLoginApi(data); // Llamada al API
+      return response.data as LoginResponse; // Asegurarse de que cumple con la interfaz
+    },
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
     },
