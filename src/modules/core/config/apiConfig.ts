@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { API_BASE_URL, API_AUTH_TOKEN } from "@core/config/hooksConfig";
+import { API_BASE_URL } from "@core/config/hooksConfig";
 import {
   Feedback,
   GetChallengeRequest,
@@ -13,10 +13,26 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Token ${API_AUTH_TOKEN}`,
   },
 });
 
+const prepareCookies = (cookies: string[]): Record<string, string> => {
+  const cookieObject: Record<string, string> = {};
+  cookies.forEach((cookie) => {
+    const [key, value] = cookie.split("=");
+    cookieObject[key.trim()] = value.trim();
+  });
+  return cookieObject;
+};
+const getCookiesHeader = (): Record<string, string> => {
+  const cookies = document.cookie.split(";");
+  const preparedCookies = prepareCookies(cookies);
+  return {
+    Cookie: Object.entries(preparedCookies)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("; "),
+  };
+};
 export const getLoginApi = (
   data: LoginRequest
 ): Promise<AxiosResponse<LoginResponse>> =>
@@ -25,13 +41,16 @@ export const getLoginApi = (
 export const getChallengeApi = (
   data: GetChallengeRequest
 ): Promise<AxiosResponse<Challenge>> =>
-  apiClient.post<Challenge>("/api/get-challenge/", data);
+  apiClient.post<Challenge>("/api/get-challenge/", data, {
+    headers: {
+      ...getCookiesHeader(),
+    },
+  });
 
 export const getFeedbackApi = (
   data: GetFeedbackRequest
 ): Promise<AxiosResponse<Feedback>> => {
   const formData = new FormData();
-  formData.append("student_id", data.student_id.toString());
   formData.append("challenge_id", data.challenge_id.toString());
   formData.append("answer_type", data.answer_type);
 
@@ -43,11 +62,16 @@ export const getFeedbackApi = (
   return apiClient.post<Feedback>("/api/get-feedback/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      ...getCookiesHeader(),
     },
   });
 };
 
 export const getAllChallengesApi = (): Promise<AxiosResponse<Challenge[]>> =>
-  apiClient.get<Challenge[]>("/api/challenges/");
+  apiClient.get<Challenge[]>("/api/challenges/", {
+    headers: {
+      ...getCookiesHeader(),
+    },
+  });
 
 export default apiClient;
