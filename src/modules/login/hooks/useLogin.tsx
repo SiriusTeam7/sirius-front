@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useGetLogin } from "@/modules/core/hooks/useApiHooks";
 import { LoginRequest } from "@/modules/core/interfaces/Api.interface";
 
