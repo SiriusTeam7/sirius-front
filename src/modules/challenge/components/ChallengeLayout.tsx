@@ -1,13 +1,10 @@
-import { Consola } from "@/assets/images";
+
 import SideNav from "./SideNav";
 import { Button } from "@/modules/core/design-system/Button";
 import { Textarea } from "@/modules/core/design-system/TextArea";
 import { AudioRecorder } from "./AudioRecorder";
 import { KeyboardIcon, Mic } from "lucide-react";
 import { useState } from "react";
-import LoadingWithFeedback from "./Loading";
-import { siriusImage } from "@/assets/images";
-import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
 import CodeEditor from "./CodeEditor";
 
 export default function ChallengeLayout() {

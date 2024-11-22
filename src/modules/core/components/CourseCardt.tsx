@@ -1,7 +1,7 @@
 import { CourseCardProps } from "@/modules/core/interfaces/Courses.interface";
-import { completedIcon, CourseCover , checkAvailable, circleEmpty} from "@/assets/images";
+import { completedIcon, CourseCover , circleEmpty} from "@/assets/images";
 
-const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
     <div
       className="bg-[#1F2127] text-white w-[300px] min-w-[300px] rounded-lg shadow-md p-6 w-80 flex flex-col space-y-4 border border-white/70"
