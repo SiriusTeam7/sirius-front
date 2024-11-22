@@ -3,11 +3,14 @@ import SideNav from "./SideNav";
 import { Button } from "@/modules/core/design-system/Button";
 import { Textarea } from "@/modules/core/design-system/TextArea";
 import { AudioRecorder } from "./AudioRecorder";
-import { Mic, PencilIcon } from "lucide-react";
+import { KeyboardIcon, Mic } from "lucide-react";
 import { useState } from "react";
+import LoadingWithFeedback from "./Loading";
+import {siriusImage} from '@/assets/images'
+import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
 
 export default function ChallengeLayout() {
-  const isCodeChallenge = false;
+  const isCodeChallenge = true;
   const [inputMode, setInputMode] = useState("text");
   /* const {
     inputMode,
@@ -113,19 +116,18 @@ export default function ChallengeLayout() {
                 <button
                   aria-label="Cambiar a grabar voz"
                   onClick={() => {
-                    if (inputMode === "text"){
-                        setInputMode("audio");
-                    }else{
-                        setInputMode("text");
+                    if (inputMode === "text") {
+                      setInputMode("audio");
+                    } else {
+                      setInputMode("text");
                     }
-                    
                   }}
                   className="flex items-center justify-center p-2 bg-gray-700 rounded-full hover:bg-gray-600 focus:ring focus:ring-green-500"
                 >
                   {inputMode === "text" ? (
                     <Mic className="h-5 w-5 text-white" />
                   ) : (
-                    <PencilIcon className="h-5 w-5 text-white" />
+                    <KeyboardIcon className="h-5 w-5 text-white" />
                   )}
                 </button>
               </div>
@@ -136,7 +138,7 @@ export default function ChallengeLayout() {
         <div className="flex justify-end mt-4">
           <Button type="submit" size="lg" variant="secondary">
             Enviar
-          </Button>{" "}
+          </Button>
         </div>
 
         {/* Flashcards */}
@@ -144,7 +146,7 @@ export default function ChallengeLayout() {
           <div className="mt-5 flex justify-center">
             <div className="grid grid-cols-3 gap-4 w-full ">
               <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                <p className="font-bold">Flashcard 1</p>
+                <p className="text-sm font-bold">Flashcard 1</p>
                 <p className="text-sm">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
                   accusantium doloribus, commodi, molestiae earum officiis iure
@@ -152,7 +154,7 @@ export default function ChallengeLayout() {
                 </p>
               </div>
               <div className="p-2 bg-[#1F2127] rounded-lg text-center border border-secondary shadow-lg">
-                <p className="font-bold">Flashcard 2</p>
+                <p className="text-sm font-bold">Flashcard 2</p>
                 <p className="text-sm">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
                   accusantium doloribus, commodi, molestiae earum officiis iure
@@ -160,7 +162,7 @@ export default function ChallengeLayout() {
                 </p>
               </div>
               <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                <p className="font-bold">Flashcard 3</p>
+                <p className="text-sm font-bold">Flashcard 3</p>
                 <p className="text-sm">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
                   accusantium doloribus, commodi, molestiae earum officiis iure
@@ -177,14 +179,22 @@ export default function ChallengeLayout() {
   return (
     <div className="bg-primary w-full mx-auto flex  flex-col sm:flex-row">
       <SideNav />
-      <div className="bg-primary  w-full mx-auto flex flex-col px-2">
+      <div className="bg-primary  w-full mx-auto flex flex-col p-2">
         <div className="mt-12">
           <h1 className="text-2xl font-bold text-start">Título del Reto</h1>
         </div>
         <div className="bg-primary  w-full mx-auto mt-4 grid grid-cols-2 gap-4">
           {renderChallenge()}
           {/* Segunda división */}
+          {/*<LoadingWithFeedback logo={siriusImage} onComplete={() => { } } loading={true} />*/}
           {renderAnswer()}
+          {/*<FeedbackLayout challengeTitle={""} feedbackText={""} followUpLinks={[]} onClose={function (): void {
+                      throw new Error("Function not implemented.");
+                  } } onRetake={function (): void {
+                      throw new Error("Function not implemented.");
+                  } } onGoHome={function (): void {
+                      throw new Error("Function not implemented.");
+                  } } />*/}
         </div>
       </div>
     </div>
