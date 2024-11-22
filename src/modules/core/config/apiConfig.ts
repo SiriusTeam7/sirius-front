@@ -14,9 +14,24 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-   // "Cookie": "csrftoken=0yE0y0TbEUos9J3igXfdgzvAnjqR3YFO; sessionid=2j0wybulbb2wsjz5ktsbp4suyshwi9bl;",
+
   },
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("authToken");
+    if (token && config.headers) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 export const getLoginApi = async (
   data: LoginRequest
