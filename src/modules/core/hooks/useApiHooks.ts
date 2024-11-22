@@ -19,7 +19,7 @@ import {
   LoginRequest,
   LoginResponse,
 } from "@interfaces/Api.interface";
-import { Challenge } from "../interfaces/Shared.interface";
+import { Challenge } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
 
 export function useGetLogin(): UseMutationResult<
@@ -34,7 +34,6 @@ export function useGetLogin(): UseMutationResult<
 
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
-      console.log("🚀 ~ data:", data);
       // Get csrftoken and sessionid to save in cookies
       const { csrftoken, sessionid } = data.user;
 

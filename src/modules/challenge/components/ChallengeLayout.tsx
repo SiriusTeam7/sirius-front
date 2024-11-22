@@ -50,7 +50,7 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                 )}
                 <form onSubmit={handleSubmit} className="space-y-6" data-testid="challenge-form">
                     <div className="flex justify-center mb-4">
-                        <ToggleGroup type="single" value={inputMode} onValueChange={(value : String) => value && setInputMode(value as 'text' | 'audio')}>
+                        <ToggleGroup type="single" value={inputMode} onValueChange={(value: string) => value && setInputMode(value as 'text' | 'audio')}>
                             <ToggleGroupItem value="text" aria-label="Text input mode">
                                 <Type className="h-4 w-4" />
                             </ToggleGroupItem>

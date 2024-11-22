@@ -1,19 +1,17 @@
 import { useState } from "react"
 
 
-export  function useStateChallenge (onSubmit : (inputMode: 'text' | 'audio', response: string | Blob) => void) {
+export function useStateChallenge(onSubmit: (inputMode: 'text' | 'audio', response: string | Blob) => void) {
     const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
     const [response, setResponse] = useState('')
 
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (inputMode === 'audio') {
-            console.log('Submitted audio response:', audioBlob)
             onSubmit(inputMode, audioBlob!)
         } else {
-            console.log('Submitted text response:', response)
             onSubmit(inputMode, response)
         }
     }
