@@ -34,7 +34,7 @@ export default function CodeEditor() {
     const [executionResult, setExecutionResult] = useState<boolean | null>(null)
     const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
-    const { runCode, pyodideReady } = useCompiler({ onCodeExecuted: setExecutionResult });
+    const { runCode, pyodideReady } = useCompiler();
 
     const handleEditorChange: EditorProps['onChange'] = (value) => {
         if (value !== undefined) {

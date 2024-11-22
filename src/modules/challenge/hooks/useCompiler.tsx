@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import { CodeSubmission, RunnerProps, TestCase } from '@interfaces/Compiler.interface';
+import { CodeSubmission, TestCase } from '@interfaces/Compiler.interface';
 
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         pyodide: any;
     }
 }
 
-export function useCompiler({ onCodeExecuted }: RunnerProps) {
+export function useCompiler() {
     const [pyodideReady, setPyodideReady] = useState<boolean>(false);
 
     const loadPyodide = async () => {
@@ -20,14 +21,11 @@ export function useCompiler({ onCodeExecuted }: RunnerProps) {
 
         }
         setPyodideReady(true);
-        console.log('Pyodide loaded!', window.pyodide, pyodideReady);
     };
     useEffect(() => {
 
         if (!pyodideReady) {
             loadPyodide();
-        } else {
-            console.log('Pyodide already loaded!', window.pyodide, pyodideReady);
         }
     }, [pyodideReady]);
 
@@ -52,12 +50,10 @@ export function useCompiler({ onCodeExecuted }: RunnerProps) {
         try {
             const userFunction = new Function(`return (${code})`)();
 
-            console.log("🚀 ~ runJavaScript ~ userFunction:", userFunction);
             for (const testCase of testCases) {
                 const result = userFunction(...testCase.input);
 
                 if (JSON.stringify(result) !== JSON.stringify(testCase.expectedOutput)) {
-                    console.log("🚀 ~ runJavaScript ~ result:", result);
                     return false;
                 }
             }
@@ -99,11 +95,9 @@ result = run_tests(greet)
             `;
 
 
-            console.log("🚀 ~ runPython ~ fullCode:", fullCode);
             // Run the Python code
             pyodide.runPython(fullCode);
 
-            console.log("🚀 ~ runPython ~ pyodide:", pyodide)
             // Get the result
             const result = pyodide.globals.get('result')
             console.log("🚀 ~ runPython ~ result:", result);
