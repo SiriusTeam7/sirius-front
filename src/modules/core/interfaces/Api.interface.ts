@@ -32,7 +32,11 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   message: string;
-  user: {
-    student_id: number;
-  };
+  user: LoginUser;
+}
+
+interface LoginUser {
+  student_id: number;
+  csrftoken: string;
+  sessionid: string;
 }

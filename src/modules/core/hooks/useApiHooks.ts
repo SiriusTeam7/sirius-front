@@ -10,6 +10,7 @@ import {
   getFeedbackApi,
   getAllChallengesApi,
   getLoginApi,
+  getValidateCookiesApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -18,7 +19,7 @@ import {
   LoginRequest,
   LoginResponse,
 } from "@interfaces/Api.interface";
-import { Challenge } from "../interfaces/Shared.interface";
+import { Challenge } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
 
 export function useGetLogin(): UseMutationResult<
@@ -28,16 +29,20 @@ export function useGetLogin(): UseMutationResult<
 > {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: LoginRequest)=> {
-      const response = await getLoginApi(data); // Llamada al API
-      return response.data as LoginResponse; // Asegurarse de que cumple con la interfaz
-    },
+    mutationFn: async (data: LoginRequest) =>
+      getLoginApi(data).then((res) => res.data),
+
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
+      // Get csrftoken and sessionid to save in cookies
+      const { csrftoken, sessionid } = data.user;
+
+      // Set cookies
+      document.cookie = `csrftoken=${csrftoken}; path=/;`;
+      document.cookie = `sessionid=${sessionid}; path=/;`;
     },
     onError: (error) => {
-      console.error("Error fetching login:", error);
-      queryClient.setQueryData(["user", null], null);
+      console.error("Error en el inicio de sesión:", error);
     },
   });
 }
@@ -91,6 +96,19 @@ export function useGetAllChallenges(): UseQueryResult<Challenge[], Error> {
     gcTime: 30 * 60 * 1000, // 30 minutes (formerly cacheTime)
     throwOnError: (error) => {
       console.error("Error fetching all challenges:", error);
+      return false;
+    },
+  });
+}
+export function useValidateCookies(): UseQueryResult<LoginResponse, Error> {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await getValidateCookiesApi();
+      return res.data;
+    },
+    throwOnError: (error) => {
+      console.error("Error validating cookies:", error);
       return false;
     },
   });

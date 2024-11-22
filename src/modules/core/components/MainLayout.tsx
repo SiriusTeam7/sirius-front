@@ -30,7 +30,8 @@ function MainLayout() {
         <Outlet />
       </main>
     </div>
-  );
+
+  )
 }
 
 export default MainLayout;

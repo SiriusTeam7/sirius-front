@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { API_BASE_URL, API_AUTH_TOKEN } from "@core/config/hooksConfig";
+import { API_BASE_URL } from "@core/config/hooksConfig";
 import {
   Feedback,
   GetChallengeRequest,
@@ -13,25 +13,28 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Token ${API_AUTH_TOKEN}`,
   },
 });
 
-export const getLoginApi = (
+export const getLoginApi = async (
   data: LoginRequest
-): Promise<AxiosResponse<LoginResponse>> =>
-  apiClient.post<LoginResponse>("/login/", data);
+): Promise<AxiosResponse<LoginResponse>> => {
+  const response = await apiClient.post<LoginResponse>("/login/", data);
+
+  return response;
+};
 
 export const getChallengeApi = (
   data: GetChallengeRequest
 ): Promise<AxiosResponse<Challenge>> =>
-  apiClient.post<Challenge>("/api/get-challenge/", data);
+  apiClient.post<Challenge>("/api/get-challenge/", data, {
+    withCredentials: true,
+  });
 
 export const getFeedbackApi = (
   data: GetFeedbackRequest
 ): Promise<AxiosResponse<Feedback>> => {
   const formData = new FormData();
-  formData.append("student_id", data.student_id.toString());
   formData.append("challenge_id", data.challenge_id.toString());
   formData.append("answer_type", data.answer_type);
 
@@ -44,10 +47,18 @@ export const getFeedbackApi = (
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    withCredentials: true,
   });
 };
 
 export const getAllChallengesApi = (): Promise<AxiosResponse<Challenge[]>> =>
-  apiClient.get<Challenge[]>("/api/challenges/");
+  apiClient.get<Challenge[]>("/api/challenges/", {
+    withCredentials: true,
+  });
+
+export const getValidateCookiesApi = (): Promise<AxiosResponse<Challenge[]>> =>
+  apiClient.get<Challenge[]>("/api/validate-cookies/", {
+    withCredentials: true,
+  });
 
 export default apiClient;
