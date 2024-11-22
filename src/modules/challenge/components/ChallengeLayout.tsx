@@ -8,6 +8,7 @@ import { ToggleGroup, ToggleGroupItem } from '@core/design-system/Toggle'
 import { ChallengeLayoutProps } from '@interfaces/ChallengeLayout.interfaces'
 import { ContentContainer } from '@/modules/core/components/ContentContainer'
 import { useStateChallenge } from '../hooks/useStateChallange'
+import CodeEditor from './CodeEditor'
 
 export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }: ChallengeLayoutProps) {
 
@@ -59,9 +60,11 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                             </ToggleGroupItem>
                         </ToggleGroup>
                     </div>
-                    {inputMode === 'audio' ? (
+                    {inputMode === 'audio' && (
                         <AudioRecorder onAudioRecorded={handleAudioRecorded} />
-                    ) : (
+                    )
+                    }
+                    {inputMode === 'text' && (
                         <div>
                             <label htmlFor="response" className="block text-sm font-medium mb-2">Escribe tu respuesta <span className='text-red-500'>*</span></label>
                             <Textarea
@@ -73,6 +76,15 @@ export default function ChallengeLayout({ onClose, onSubmit, selectedChallenge }
                             />
                         </div>
                     )}
+
+                    {
+                        inputMode === 'code' && (
+                            <div>
+                                <label htmlFor="code" className="block text-sm font-medium mb-2">Escribe tu código <span className='text-red-500'>*</span></label>
+                                <CodeEditor />
+                            </div>
+                        )
+                    }
                     <Button type="submit" size="lg" variant="secondary" disabled={isSubmitDisabled}>
                         Enviar
                     </Button>

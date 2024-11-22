@@ -1,8 +1,8 @@
 import { useState } from "react"
 
 
-export function useStateChallenge(onSubmit: (inputMode: 'text' | 'audio', response: string | Blob) => void) {
-    const [inputMode, setInputMode] = useState<'text' | 'audio'>('text')
+export function useStateChallenge(onSubmit: (inputMode: 'text' | 'audio' | 'code', response: string | Blob) => void) {
+    const [inputMode, setInputMode] = useState<'text' | 'audio' | 'code'>('code')
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
     const [response, setResponse] = useState('')
 
