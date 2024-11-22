@@ -11,6 +11,7 @@ import {
   getAllChallengesApi,
   getLoginApi,
   getValidateCookiesApi,
+  getCoursesApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -21,6 +22,7 @@ import {
 } from "@interfaces/Api.interface";
 import { Challenge } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
+import { CourseSummary } from "../interfaces/Courses.interface";
 
 export function useGetLogin(): UseMutationResult<
   LoginResponse,
@@ -37,12 +39,30 @@ export function useGetLogin(): UseMutationResult<
       // Get csrftoken and sessionid to save in cookies
       const { csrftoken, sessionid } = data.user;
 
-      // Set cookies
-      document.cookie = `csrftoken=${csrftoken}; path=/;`;
-      document.cookie = `sessionid=${sessionid}; path=/;`;
+      // Set cookies  
+      document.cookie = `csrftoken=${csrftoken}; path=/; SameSite=None; Secure`;
+      document.cookie = `sessionid=${sessionid}; path=/; SameSite=None; Secure`;
+      document.cookie = `csrftoken=${csrftoken}; path=/; domain=hack.siriusapi.online SameSite=None; Secure`;
+      document.cookie = `sessionid=${sessionid}; path=/; domain=hack.siriusapi.online SameSite=None; Secure`;
     },
     onError: (error) => {
       console.error("Error en el inicio de sesión:", error);
+    },
+  });
+}
+
+export function useGetCourses(): UseQueryResult<CourseSummary[], Error> {
+  return useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      
+      const res = await getCoursesApi();
+      console.log("RES CONSOLE",res)
+      return res.data
+    },
+    throwOnError: (error) => {
+      console.error("Error fetching all courses sumary:", error);
+      return false;
     },
   });
 }

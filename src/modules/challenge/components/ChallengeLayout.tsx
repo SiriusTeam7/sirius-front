@@ -6,8 +6,9 @@ import { AudioRecorder } from "./AudioRecorder";
 import { KeyboardIcon, Mic } from "lucide-react";
 import { useState } from "react";
 import LoadingWithFeedback from "./Loading";
-import {siriusImage} from '@/assets/images'
+import { siriusImage } from "@/assets/images";
 import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
+import CodeEditor from "./CodeEditor";
 
 export default function ChallengeLayout() {
   const isCodeChallenge = true;
@@ -27,7 +28,7 @@ export default function ChallengeLayout() {
       <div className="flex flex-col items-start justify-start ">
         <div className="w-full h-full p-6 rounded-lg  bg-gray-800">
           {isCodeChallenge ? (
-            <img src={Consola} />
+            <CodeEditor />
           ) : (
             <>
               <p className="text-gray-300">

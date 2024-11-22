@@ -7,7 +7,6 @@ import { Cohete } from "@/assets/images";
 function MainLayout() {
   const location = useLocation();
 
-
   return (
     <div className="bg-primary min-h-screen w-full mx-auto flex  flex-col sm:flex-row">
       <Sidebar />
@@ -15,23 +14,23 @@ function MainLayout() {
         {location.pathname === "/" && (
           <section>
             <div className="flex">
-            <img src={Cohete} className="p-1 w-10 h-10" />
+              <img src={Cohete} className="p-1 w-10 h-10" />
 
               <h1 className="text-2xl font-bold">Hola, Platzinauta</h1>
             </div>
             <FactsLayout />
             <CourseAvailables
+              type="available"
               section_title={"Repasos disponibles"}
               section_subtitle="Cursos con retos disponibles"
             />
-            <CourseAvailables section_title={"Repasos completados"} />
+            <CourseAvailables type="completed" section_title={"Repasos completados"} />
           </section>
         )}
         <Outlet />
       </main>
     </div>
-
-  )
+  );
 }
 
 export default MainLayout;

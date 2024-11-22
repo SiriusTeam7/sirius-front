@@ -11,6 +11,12 @@ export interface CoursesAvailableProps {
 }
 
 export interface CourseCardProps {
-  course: Course;
+  course: CourseSummary;
   onClick: (course: Course) => void;
+}
+
+export interface CourseSummary {
+  course__id: number;
+  course__title: string;
+  total_challenges: number;
 }

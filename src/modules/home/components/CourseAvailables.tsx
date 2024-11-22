@@ -1,14 +1,16 @@
 import Carousel from "@/modules/core/components/Carousel";
 import CourseCard from "@/modules/core/components/CourseCardt";
-import { Course } from "@/modules/core/interfaces/Courses.interface";
+import { Course, CourseSummary } from "@/modules/core/interfaces/Courses.interface";
 import { useNavigate } from "react-router-dom";
+import { useCourses } from "../hooks/useCourses";
 
 interface CoursesAvailableProps {
   section_title: string;
   section_subtitle?: string;
+  type: "available" | "completed";
 }
 
-const courses: Course[] = [
+const courses2: Course[] = [
   {
     id: 1,
     course_id: 101,
@@ -32,14 +34,17 @@ const courses: Course[] = [
   },
 ];
 
+
 const CourseAvailables: React.FC<CoursesAvailableProps> = ({
   section_title,
   section_subtitle,
+  type,
 }) => {
   const navigate = useNavigate();
+  const {courses} = useCourses();
 
-  const handleCardClick = (course: Course) => {
-    navigate("/challenges", { state: { course } });
+  const handleCardClick = () => {
+//    navigate("/challenges", { state: { course } });
   };
 
   return (
@@ -48,11 +53,10 @@ const CourseAvailables: React.FC<CoursesAvailableProps> = ({
       {section_subtitle && <p className="text ">{section_subtitle}</p>}
       <div className="flex mt-6 mb-10  gap-6">
         <Carousel cardWidth={300}>
-          {courses.map((course) => (
+          {courses?.map((course) => (
             <CourseCard
-              key={course.id}
               course={course}
-              onClick={() => handleCardClick(course)}
+              onClick={() => handleCardClick()}
             />
           ))}
         </Carousel>

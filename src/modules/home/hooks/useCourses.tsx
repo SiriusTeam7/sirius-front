@@ -1,14 +1,17 @@
-import { useGetFeedback } from "@/modules/core/hooks/useApiHooks";
+import { useGetCourses } from "@/modules/core/hooks/useApiHooks";
 import { GetFeedbackRequest } from "@/modules/core/interfaces/Api.interface";
 import { Challenge } from "@/modules/core/interfaces/Shared.interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function useChallenges(challenges: Challenge[] = []) {
+export function useCourses() {
 
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
     const [dialogStatus, setDialogStatus] = useState<'challenge' | 'loading' | 'feedback' | 'error'>('challenge')
-    const mutation = useGetFeedback(setDialogStatus);
+    const { data: courses } = useGetCourses();
+
+    console.log('courses', courses);
+    
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -27,7 +30,7 @@ export function useChallenges(challenges: Challenge[] = []) {
                 answer_type: 'text',
                 answer_text: response as string,
             };
-            mutation.mutate(feedbackRequest);
+         //   mutation.mutate(feedbackRequest);
         } else if (inputType === 'audio') {
 
             const audioFile = new File([response], 'response.mp3', { type: 'audio/mp3' })
@@ -37,7 +40,7 @@ export function useChallenges(challenges: Challenge[] = []) {
                 answer_type: 'audio',
                 answer_audio: audioFile,
             };
-            mutation.mutate(feedbackRequest);
+          //  mutation.mutate(feedbackRequest);
         }
 
     };
@@ -45,7 +48,7 @@ export function useChallenges(challenges: Challenge[] = []) {
 
     const handleCardClick = (id: string | number) => {
         setOpenDialog(true);
-        setSelectedChallenge(challenges?.find((challenge) => challenge.id === id) || null);
+       // setSelectedChallenge(challenges?.find((challenge) => challenge.id === id) || null);
     }
 
     const handleRetry = () => {
@@ -57,7 +60,7 @@ export function useChallenges(challenges: Challenge[] = []) {
         openDialog,
         selectedChallenge,
         dialogStatus,
-        mutation,
+        courses,
         handleCloseDialog,
         handleChallengeSubmit,
         handleCardClick,
