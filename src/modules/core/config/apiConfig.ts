@@ -26,6 +26,7 @@ const prepareCookies = (cookies: string[]): Record<string, string> => {
 };
 const getCookiesHeader = (): Record<string, string> => {
   const cookies = document.cookie.split(";");
+  console.log("🚀 ~ getCookiesHeader ~ cookies:", cookies);
   const preparedCookies = prepareCookies(cookies);
   return {
     Cookie: Object.entries(preparedCookies)
@@ -33,10 +34,31 @@ const getCookiesHeader = (): Record<string, string> => {
       .join("; "),
   };
 };
-export const getLoginApi = (
+
+const setCookiesFromResponse = (response: AxiosResponse): void => {
+  const cookies = response.headers["set-cookie"];
+  console.log("🚀 ~ setCookiesFromResponse ~ response:", response);
+  document.cookie =
+    "csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  if (cookies) {
+    cookies.forEach((cookie) => {
+      document.cookie = cookie;
+    });
+  }
+};
+export const getLoginApi = async (
   data: LoginRequest
-): Promise<AxiosResponse<LoginResponse>> =>
-  apiClient.post<LoginResponse>("/login/", data);
+): Promise<AxiosResponse<LoginResponse>> => {
+  const response = await apiClient.post<LoginResponse>("/login/", data, {
+    withCredentials: true,
+  });
+
+  const csrfToken = response.headers["X-CSRFToken"];
+  console.log(csrfToken);
+  setCookiesFromResponse(response);
+
+  return response;
+};
 
 export const getChallengeApi = (
   data: GetChallengeRequest
@@ -62,8 +84,8 @@ export const getFeedbackApi = (
   return apiClient.post<Feedback>("/api/get-feedback/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      ...getCookiesHeader(),
     },
+    withCredentials: true,
   });
 };
 
@@ -72,6 +94,11 @@ export const getAllChallengesApi = (): Promise<AxiosResponse<Challenge[]>> =>
     headers: {
       ...getCookiesHeader(),
     },
+  });
+
+export const getValidateCookiesApi = (): Promise<AxiosResponse<Challenge[]>> =>
+  apiClient.get<Challenge[]>("/api/validate-cookies/", {
+    withCredentials: true,
   });
 
 export default apiClient;

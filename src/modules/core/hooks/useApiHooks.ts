@@ -10,6 +10,7 @@ import {
   getFeedbackApi,
   getAllChallengesApi,
   getLoginApi,
+  getValidateCookiesApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -32,9 +33,10 @@ export function useGetLogin(): UseMutationResult<
       getLoginApi(data).then((res) => res.data),
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
+      console.log("🚀 ~ data:", data);
     },
     onError: (error) => {
-      console.error("Error en el inicio de sesión:", error.message);
+      console.error("Error en el inicio de sesión:", error);
     },
   });
 }
@@ -88,6 +90,19 @@ export function useGetAllChallenges(): UseQueryResult<Challenge[], Error> {
     gcTime: 30 * 60 * 1000, // 30 minutes (formerly cacheTime)
     throwOnError: (error) => {
       console.error("Error fetching all challenges:", error);
+      return false;
+    },
+  });
+}
+export function useValidateCookies(): UseQueryResult<LoginResponse, Error> {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await getValidateCookiesApi();
+      return res.data;
+    },
+    throwOnError: (error) => {
+      console.error("Error validating cookies:", error);
       return false;
     },
   });

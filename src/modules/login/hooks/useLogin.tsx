@@ -17,15 +17,20 @@ export function useLogin() {
     if (username && password) {
       setIsLoading(true);
       const loginData: LoginRequest = { username, password };
-      mutate(loginData);
+      mutate(loginData, {
 
-      if (isSuccess) {
-        console.log('Login exitoso')
-        navigate('/');
-      } else {
-        console.error('Error en el inicio de sesión')
-      }
-    } else {
+        onSuccess: () => {
+          setIsLoading(false);
+          console.log('Login exitoso')
+          navigate('/');
+        },
+        onError: (error) => {
+          setIsLoading(false);
+          setError(error.message);
+        },
+      });
+    }
+    else {
       setError("Por favor, llena todos los campos");
     }
   };
@@ -34,7 +39,7 @@ export function useLogin() {
   const validateSession = (): boolean => {
     // Check if cookies are present
     const cookies = document.cookie.split(";");
-    console.log("🚀 ~ validateSession ~ cookies:", cookies)
+    console.log("🚀 ~ validateSession ~ cookies:", document)
 
     // Check if cookies "csrftoken" and "sessionid" are present
     const csrfToken = cookies.find((cookie) => cookie.includes("csrftoken"));
