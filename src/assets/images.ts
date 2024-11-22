@@ -9,6 +9,19 @@ import progress from '../assets/svgexport-8.svg'
 import chat from '../assets/svgexport-9.svg'
 import completedIcon from '../assets/checkgreen.svg'
 import arrowRigth from '../assets/svgexport-18.svg'
+import platzi from '../assets/svgexport-20.svg'
+import PlatziLogo from '../assets/platziLogo.svg'
+import circleEmpty from '../assets/circle_empty.svg'
+import SiriusMenu from '../assets/sirius_menu.svg'
+import CourseCover from  '../assets/course_cover.png'
+import Trofeo from '../assets/trofeo.svg'
+import RetosAvailables from '../assets/retos_disponibles.svg'
+import Timer from '../assets/timer.svg'
+import checkAvailable from '../assets/reto_disponible_espaciada.svg'
+import Cohete from '../assets/svgexport-14.svg'
+import Next from '../assets/svgexport-18.svg'
+import Time from '../assets/watch.svg'
+import Consola from '../assets/code.png'
 
 export {Course1,
      Course2,
@@ -20,5 +33,18 @@ export {Course1,
      chat,
      completedIcon,
      arrowRigth,
-     loading
+     loading,
+     platzi,
+     circleEmpty,
+     SiriusMenu,
+     CourseCover,
+     Trofeo,
+     RetosAvailables,
+     Timer,
+     checkAvailable,
+     Cohete,
+     Next,
+     Time,
+     Consola,
+     PlatziLogo
 }

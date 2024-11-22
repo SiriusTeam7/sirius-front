@@ -1,9 +1,10 @@
 import {
-  siriusImage,
+  platzi,
   home,
   routes,
   progress,
-  chat
+  chat,
+  SiriusMenu
 } from '@/assets/images';
 
 const Sidebar = () => {
@@ -11,7 +12,7 @@ const Sidebar = () => {
     <div>
       <div className="hidden sm:flex flex-col bg-primary h-screen w-48 items-start px-4 py-6 space-y-6 text-white">
         <div className="flex items-center justify-center w-full">
-          <img src={siriusImage} alt="Logo" className="h-24" />
+          <img src={platzi} alt="Logo" className="h-24" />
         </div>
 
         <nav className="flex flex-col space-y-6 w-full">
@@ -43,6 +44,15 @@ const Sidebar = () => {
             <img src={chat} alt="Chat ADA" className="h-6 w-6" />
             <span className="ml-3">Chat ADA</span>
           </a>
+          
+          <a
+            href="/"
+            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+          >
+            <img src={SiriusMenu} alt="Sirius" className="h-6 w-6" />
+            <span className="ml-3">Mis retos</span>
+          </a>
+
 
         </nav>
       </div>

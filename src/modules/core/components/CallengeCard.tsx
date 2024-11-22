@@ -11,19 +11,19 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
   const renderHeader = () => {
     return (
       <div className="flex items-center justify-between mb-4">
-        <div className=" bg-[#133962] px-3 py-1 rounded-lg text-sm font-semibold text-[#6CC3EF]">
+        <p className=" bg-[#133962] px-3 py-1 rounded-lg text-sm font-semibold text-[#6CC3EF]">
           PRIMER REPASO
-        </div>
+        </p>
         {challenge.status === 2 && (
-          <div className=" bg-secondary px-3 py-1 rounded-lg text-sm font-semibold text-black">
+          <p className=" bg-secondary px-3 py-1 rounded-lg text-sm font-semibold text-black">
             NUEVO
-          </div>
+          </p>
         )}
 
         {challenge.status === 1 && (
-          <div className=" bg-[#404451] px-3 py-1 rounded-lg text-sm  text-white">
+          <p className=" bg-[#404451] px-3 py-1 rounded-lg text-sm  text-white">
             6.8/10
-          </div>
+          </p>
         )}
       </div>
     );
@@ -34,7 +34,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
       return (
         <>
           <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center ">
+            <div className="flex  items-center ">
               <img
                 src={completedIcon}
                 alt="Reto completado"

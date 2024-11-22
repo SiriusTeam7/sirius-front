@@ -30,7 +30,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, cardWidth }) => {
         <div className="relative w-full flex items-center">
             <button
                 onClick={scrollLeft}
-                className=" text-white rounded-full p-2  z-10"
+                className=" text-white hidden rounded-full p-2  z-10"
             >
                 ←
             </button>
@@ -47,7 +47,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, cardWidth }) => {
                 onClick={scrollRight}
                 className="text-white rounded-full p-2  z-10"
             >
-                <img src={arrowRigth} alt="Scroll Right" className="h-12 w-12" />
+                <img src={arrowRigth} alt="Scroll Right" className="h-6 w-6" />
             </button>
         </div>
     );
