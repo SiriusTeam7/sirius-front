@@ -16,46 +16,10 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
-const prepareCookies = (cookies: string[]): Record<string, string> => {
-  const cookieObject: Record<string, string> = {};
-  cookies.forEach((cookie) => {
-    const [key, value] = cookie.split("=");
-    cookieObject[key.trim()] = value.trim();
-  });
-  return cookieObject;
-};
-const getCookiesHeader = (): Record<string, string> => {
-  const cookies = document.cookie.split(";");
-  console.log("🚀 ~ getCookiesHeader ~ cookies:", cookies);
-  const preparedCookies = prepareCookies(cookies);
-  return {
-    Cookie: Object.entries(preparedCookies)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("; "),
-  };
-};
-
-const setCookiesFromResponse = (response: AxiosResponse): void => {
-  const cookies = response.headers["set-cookie"];
-  console.log("🚀 ~ setCookiesFromResponse ~ response:", response);
-  document.cookie =
-    "csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  if (cookies) {
-    cookies.forEach((cookie) => {
-      document.cookie = cookie;
-    });
-  }
-};
 export const getLoginApi = async (
   data: LoginRequest
 ): Promise<AxiosResponse<LoginResponse>> => {
-  const response = await apiClient.post<LoginResponse>("/login/", data, {
-    withCredentials: true,
-  });
-
-  const csrfToken = response.headers["X-CSRFToken"];
-  console.log(csrfToken);
-  setCookiesFromResponse(response);
+  const response = await apiClient.post<LoginResponse>("/login/", data);
 
   return response;
 };
@@ -64,9 +28,7 @@ export const getChallengeApi = (
   data: GetChallengeRequest
 ): Promise<AxiosResponse<Challenge>> =>
   apiClient.post<Challenge>("/api/get-challenge/", data, {
-    headers: {
-      ...getCookiesHeader(),
-    },
+    withCredentials: true,
   });
 
 export const getFeedbackApi = (
@@ -91,9 +53,7 @@ export const getFeedbackApi = (
 
 export const getAllChallengesApi = (): Promise<AxiosResponse<Challenge[]>> =>
   apiClient.get<Challenge[]>("/api/challenges/", {
-    headers: {
-      ...getCookiesHeader(),
-    },
+    withCredentials: true,
   });
 
 export const getValidateCookiesApi = (): Promise<AxiosResponse<Challenge[]>> =>

@@ -31,9 +31,16 @@ export function useGetLogin(): UseMutationResult<
   return useMutation({
     mutationFn: async (data: LoginRequest) =>
       getLoginApi(data).then((res) => res.data),
+
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
       console.log("🚀 ~ data:", data);
+      // Get csrftoken and sessionid to save in cookies
+      const { csrftoken, sessionid } = data.user;
+
+      // Set cookies
+      document.cookie = `csrftoken=${csrftoken}; path=/;`;
+      document.cookie = `sessionid=${sessionid}; path=/;`;
     },
     onError: (error) => {
       console.error("Error en el inicio de sesión:", error);
