@@ -24,3 +24,19 @@ export type GetFeedbackRequest =
 export interface Feedback {
   feedback: string;
 }
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  message: string;
+  user: LoginUser;
+}
+
+interface LoginUser {
+  student_id: number;
+  csrftoken: string;
+  sessionid: string;
+}

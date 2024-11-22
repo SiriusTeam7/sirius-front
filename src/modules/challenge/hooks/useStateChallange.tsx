@@ -10,10 +10,8 @@ export function useStateChallenge(onSubmit: (inputMode: 'text' | 'audio' | 'code
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (inputMode === 'audio') {
-            console.log('Submitted audio response:', audioBlob)
             onSubmit(inputMode, audioBlob!)
         } else {
-            console.log('Submitted text response:', response)
             onSubmit(inputMode, response)
         }
     }
