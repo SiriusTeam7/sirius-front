@@ -16,7 +16,7 @@ export function AudioRecorder({ onAudioRecorded }: AudioRecorderProps) {
 
     return (
         <div className="flex flex-col items-center space-y-4">
-            <p className="text-sm text-textPrimary" data-testid="audio-recorder">Graba tu respuesta</p>
+            <p className=" text-textPrimary" data-testid="audio-recorder">Graba tu respuesta</p>
             <div className="flex space-x-2">
                 {!isRecording && !audioBlob && (
                     <Button onClick={startRecording} variant="outline" size="icon">

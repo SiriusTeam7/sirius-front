@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#1E2329",
+        primary: "#13171D",
         secondary: "#06E98A",
         textPrimary: "#FFFFFF",
         textSecondary: "#9CA3AF",
@@ -15,6 +15,9 @@ export default {
       },
       backgroundImage: {
         gradient: "linear-gradient(135deg, #13161c 70%, #06E98A 100%)",
+      },
+      animation: {
+        spinSlow: 'spinSlow 3s linear infinite',
       },
     },
   },

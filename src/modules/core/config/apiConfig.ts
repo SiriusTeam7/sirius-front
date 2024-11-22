@@ -8,11 +8,13 @@ import {
   LoginResponse,
 } from "@interfaces/Api.interface";
 import { Challenge } from "../interfaces/Shared.interface";
+import { CourseSummary } from "../interfaces/Courses.interface";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+   // "Cookie": "csrftoken=0yE0y0TbEUos9J3igXfdgzvAnjqR3YFO; sessionid=2j0wybulbb2wsjz5ktsbp4suyshwi9bl;",
   },
 });
 
@@ -23,6 +25,11 @@ export const getLoginApi = async (
 
   return response;
 };
+
+export const getCoursesApi = (): Promise<AxiosResponse<CourseSummary[]>> =>
+  apiClient.get<CourseSummary[]>("/api/courses-summary", {
+    withCredentials: true,
+  });
 
 export const getChallengeApi = (
   data: GetChallengeRequest
