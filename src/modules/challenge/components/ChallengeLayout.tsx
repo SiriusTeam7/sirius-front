@@ -1,4 +1,3 @@
-
 import SideNav from "./SideNav";
 import { Button } from "@/modules/core/design-system/Button";
 import { Textarea } from "@/modules/core/design-system/TextArea";
@@ -6,19 +5,17 @@ import { AudioRecorder } from "./AudioRecorder";
 import { KeyboardIcon, Mic } from "lucide-react";
 import { useState } from "react";
 import CodeEditor from "./CodeEditor";
+import { useStateChallenge } from "../hooks/useStateChallange";
+import LoadingWithFeedback from "./Loading";
+import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
 
 export default function ChallengeLayout() {
   const isCodeChallenge = true;
   const [inputMode, setInputMode] = useState("text");
-  /* const {
-    inputMode,
-    setInputMode,
-    handleSubmit,
-    handleAudioRecorded,
-    response,
-    setResponse,
-    isSubmitDisabled,
-  } = useStateChallenge(onSubmit);*/
+  const { formatTime, timeLeft, borderColor, submitStatus, handleSubmit } = useStateChallenge(
+    () => {},
+    600
+  );
 
   const renderChallenge = () => {
     return (
@@ -75,10 +72,11 @@ export default function ChallengeLayout() {
   const renderAnswer = () => {
     return (
       <div className="flex flex-col justify-center h-full bg-gray-800 rounded-lg p-6">
-        {/* Timer del reto */}
         <div className="flex justify-end">
-          <div className="border border-secondary px-4 py-2 rounded-lg text-white">
-            10:00
+          <div
+            className={`border ${borderColor} px-4 py-2 rounded-lg text-white`}
+          >
+            {formatTime(timeLeft)}
           </div>
         </div>
 
@@ -133,8 +131,11 @@ export default function ChallengeLayout() {
           )}
         </div>
 
-        <div className="flex justify-end mt-4">
-          <Button type="submit" size="lg" variant="secondary">
+        <div className="flex justify-between mt-4">
+          <Button type="submit" size="lg" variant="outline">
+            Saltar reto
+          </Button>
+          <Button type="submit" size="lg" variant="secondary" onClick={handleSubmit}>
             Enviar
           </Button>
         </div>
@@ -183,16 +184,26 @@ export default function ChallengeLayout() {
         </div>
         <div className="bg-primary  w-full mx-auto mt-4 grid grid-cols-2 gap-4">
           {renderChallenge()}
-          {/* Segunda división */}
-          {/*<LoadingWithFeedback logo={siriusImage} onComplete={() => { } } loading={true} />*/}
-          {renderAnswer()}
-          {/*<FeedbackLayout challengeTitle={""} feedbackText={""} followUpLinks={[]} onClose={function (): void {
-                      throw new Error("Function not implemented.");
-                  } } onRetake={function (): void {
-                      throw new Error("Function not implemented.");
-                  } } onGoHome={function (): void {
-                      throw new Error("Function not implemented.");
-                  } } />*/}
+          {/* Segunda división que es dinamica*/}
+
+          {submitStatus === "challenge" && renderAnswer()}
+          {submitStatus === "loading" && <LoadingWithFeedback />}
+          {submitStatus === "feedback" && (
+            <FeedbackLayout
+              challengeTitle={""}
+              feedbackText={""}
+              followUpLinks={[]}
+              onClose={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              onRetake={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              onGoHome={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

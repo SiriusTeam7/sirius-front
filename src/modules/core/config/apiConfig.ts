@@ -8,13 +8,12 @@ import {
   LoginResponse,
 } from "@interfaces/Api.interface";
 import { Challenge } from "../interfaces/Shared.interface";
-import { CourseSummary } from "../interfaces/Courses.interface";
+import { Course, CourseSummary } from "../interfaces/Courses.interface";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-
   },
 });
 
@@ -32,7 +31,6 @@ apiClient.interceptors.request.use(
   }
 );
 
-
 export const getLoginApi = async (
   data: LoginRequest
 ): Promise<AxiosResponse<LoginResponse>> => {
@@ -43,6 +41,13 @@ export const getLoginApi = async (
 
 export const getCoursesApi = (): Promise<AxiosResponse<CourseSummary[]>> =>
   apiClient.get<CourseSummary[]>("/api/courses-summary", {
+    withCredentials: true,
+  });
+
+export const getCoursesMomentsApi = (): Promise<
+  AxiosResponse<Course[]>
+> =>
+  apiClient.get<Course[]>("/api/spaced_repetition", {
     withCredentials: true,
   });
 
