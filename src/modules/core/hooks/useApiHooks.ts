@@ -16,6 +16,7 @@ import {
   getScoreChallengeApi,
   getRatingChallengeApi,
   getCompanyMetricsApi,
+  getRegisterUserApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -192,6 +193,28 @@ export function useCompanyMetrics(): UseQueryResult<MetricsResponse, Error> {
     throwOnError: (error) => {
       console.error("Error fetching company metrics:", error);
       return false;
+    },
+  });
+}
+
+export function useRegisterUser(): UseMutationResult<
+  LoginResponse,
+  Error,
+  LoginRequest
+> {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: LoginRequest) => {
+      const res = await getRegisterUserApi(data);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["user", data], data);
+      const { token } = data;
+      localStorage.setItem("authToken", token);
+    },
+    onError: (error) => {
+      console.error("Error en el inicio de sesión:", error);
     },
   });
 }

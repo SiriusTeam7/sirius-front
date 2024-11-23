@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRegisterUser } from "@/modules/core/hooks/useApiHooks";
+import { LoginRequest } from "@/modules/core/interfaces/Api.interface";
 
 export function useRegister() {
   const [name, setName] = useState("");
@@ -7,18 +10,28 @@ export function useRegister() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { mutate } = useRegisterUser();
+  const navigate = useNavigate();
 
   const handleRegister = () => {
     setIsLoading(true);
     if (name && password && confirmPassword) {
-      setIsLoading(false);
       if (password !== confirmPassword) {
         setError("Las contraseñas no coinciden");
         setIsLoading(false);
       } else {
-        alert(`Usuario ${name} registrado exitosamente`);
-        setIsSuccess(true);
-        setIsLoading(false);
+        const registerData: LoginRequest = { username: name, password };
+        mutate(registerData, {
+          onSuccess: () => {
+            setIsLoading(false);
+            setIsSuccess(true);
+            navigate("/");
+          },
+          onError: (error) => {
+            setIsLoading(false);
+            setError(error.message);
+          },
+        });
       }
     } else {
       setIsLoading(false);

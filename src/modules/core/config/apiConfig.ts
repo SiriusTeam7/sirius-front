@@ -120,4 +120,13 @@ export const getCompanyMetricsApi = (): Promise<
     withCredentials: true,
   });
 
+export const getRegisterUserApi = async (data: LoginRequest) => {
+  const response = await apiClient.post<LoginResponse>(
+    "/api/user-register/",
+    data
+  );
+
+  return response;
+};
+
 export default apiClient;
