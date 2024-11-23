@@ -21,6 +21,7 @@
     "@tanstack/react-query-devtools": "^5.59.16",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
+    "dayjs": "^1.11.13",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.454.0",
     "moment": "^2.30.1",
