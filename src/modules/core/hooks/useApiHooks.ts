@@ -187,7 +187,6 @@ export function useCompanyMetrics(): UseQueryResult<MetricsResponse, Error> {
     queryKey: ["companyMetrics"],
     queryFn: async () => {
       const res = await getCompanyMetricsApi();
-      console.log("🚀 ~ queryFn: ~ res:", res);
       return res.data;
     },
     throwOnError: (error) => {
