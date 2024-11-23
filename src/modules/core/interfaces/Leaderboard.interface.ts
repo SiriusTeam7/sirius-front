@@ -43,7 +43,7 @@ interface Metric {
     average_score: number | null;
   };
   total_time: {
-    total_time: number;
+    total_time: number | null;
   };
   total_completed_challenges: number;
   average_scores_global: {
