@@ -22,6 +22,7 @@ import Cohete from '../assets/svgexport-14.svg'
 import Next from '../assets/svgexport-18.svg'
 import Time from '../assets/watch.svg'
 import Consola from '../assets/code.png'
+import Disponible from '../assets/rayo.svg'
 
 export {Course1,
      Course2,
@@ -46,5 +47,6 @@ export {Course1,
      Next,
      Time,
      Consola,
-     PlatziLogo
+     PlatziLogo,
+     Disponible
 }

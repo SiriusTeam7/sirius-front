@@ -12,6 +12,7 @@ import {
   getLoginApi,
   getValidateCookiesApi,
   getCoursesApi,
+  getCoursesMomentsApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -22,7 +23,7 @@ import {
 } from "@interfaces/Api.interface";
 import { Challenge } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
-import { CourseSummary } from "../interfaces/Courses.interface";
+import { Course, CourseSummary } from "../interfaces/Courses.interface";
 
 export function useGetLogin(): UseMutationResult<
   LoginResponse,
@@ -47,11 +48,9 @@ export function useGetLogin(): UseMutationResult<
 
 export function useGetCourses(): UseQueryResult<CourseSummary[], Error> {
   return useQuery({
-    queryKey: ["courses"],
+    queryKey: ["coursesCompleted"],
     queryFn: async () => {
-      
       const res = await getCoursesApi();
-      console.log("RES CONSOLE",res)
       return res.data
     },
     throwOnError: (error) => {
@@ -60,6 +59,22 @@ export function useGetCourses(): UseQueryResult<CourseSummary[], Error> {
     },
   });
 }
+
+export function useGetMomentsCourses(): UseQueryResult<Course[], Error> {
+  return useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      const res = await getCoursesMomentsApi();
+      console.log("🚀 ~ file: useApiHooks.ts ~ line 100 ~ useQuery ~ res", res)
+      return res.data
+    },
+    throwOnError: (error) => {
+      console.error("Error fetching all courses sumary:", error);
+      return false;
+    },
+  });
+}
+
 
 export function useGetChallenge(): UseMutationResult<
   Challenge,

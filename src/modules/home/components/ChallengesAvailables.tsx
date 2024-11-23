@@ -9,32 +9,19 @@ const ChallengesAvailable = () => {
 
     const location = useLocation();
     const { course } = location.state || {}; 
+    console.log(course);
   //  const { data: challengesData } = useGetAllChallenges();
-
-    /**
-     * export interface Challenge {
-  id: number;
-  course_id: number;
-  course_title: string;
-  text: string;
-  icon: string;
-  course_color: string;
-}
-
-     */
 
    const challenges = [
     {id: 1, course_id: 101, status: 1, score: 6.7, date: '2024-11-05'},
     {id: 2, course_id: 101, status: 2, score: undefined, date: '2024-11-21'},
     {id: 3, course_id: 101, status: 3, score: undefined, date: '2024-12-05'},
-    
    ]
 
    const completedChallenges = [
     {id: 1, course_id: 101, status: 1, score: 6.7, date: '2024-11-05'},
     {id: 2, course_id: 101, status: 1, score: 7, date: '2024-11-21'},
-    {id: 3, course_id: 101, status: 1, score: 8, date: '2024-12-05'},
-    
+    {id: 3, course_id: 101, status: 1, score: 8, date: '2024-12-05'},   
    ]
 
    /*const { 

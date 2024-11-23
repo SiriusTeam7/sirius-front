@@ -2,8 +2,14 @@ export interface Course {
   id: number;
   course_id: number;
   course_title: string;
-  icon: string;
-  challenges_availables: number;
+  is_completed1: boolean;
+  is_completed2: boolean;
+  is_completed3: boolean;
+  moment1: string;
+  moment2: string;
+  moment3: string;
+  student : number;
+  created_at: string;
 }
 
 export interface CoursesAvailableProps {
@@ -12,6 +18,11 @@ export interface CoursesAvailableProps {
 
 export interface CourseCardProps {
   course: CourseSummary;
+  onClick: (course: Course) => void;
+}
+
+export interface CourseCardMomentsProps {
+  course: Course;
   onClick: (course: Course) => void;
 }
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Fondo circular -->
+  <circle cx="12" cy="12" r="11" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="1" />
+  <!-- Rayito -->
+  <path fill="#555C68" fill-rule="evenodd" d="M12.835 4.537a.5.5 0 0 1 .305.531l-.566 4.099h4.26a.5.5 0 0 1 .4.799l-5.478 7.333a.5.5 0 0 1-.896-.367l.566-4.099h-4.26a.5.5 0 0 1-.4-.799l5.478-7.333a.5.5 0 0 1 .59-.164" clip-rule="evenodd" />
+</svg>
