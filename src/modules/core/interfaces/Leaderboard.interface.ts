@@ -19,9 +19,36 @@ export interface TeamStats {
 }
 
 export interface RemainingLeaderboardProps {
-  members: TeamMember[];
+  members: StudentMetrics[];
 }
 
 export interface TopThreeLeaderboardProps {
-  members: TeamMember[];
+  members: StudentMetrics[];
+}
+
+export interface MetricsResponse {
+  global: Metric;
+  company: Metric;
+}
+
+interface Metric {
+  top_students: StudentMetrics[];
+  average_scores_moment1: {
+    average_score: number | null;
+  };
+  average_scores_moment2: {
+    average_score: number | null;
+  };
+  average_scores_moment3: {
+    average_score: number | null;
+  };
+  total_time: {
+    total_time: number | null;
+  };
+  total_completed_challenges: number;
+}
+
+interface StudentMetrics {
+  student__name: string;
+  total_challenges: number;
 }

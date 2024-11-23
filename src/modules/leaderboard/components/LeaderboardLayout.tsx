@@ -1,23 +1,24 @@
-import { TeamMember } from "@/modules/core/interfaces/Leaderboard.interface"
 import { ScoreProgress } from "./ScoreProgress"
 import { StatsPanel } from "./StatsPanel"
 import { TopThreeLeaderboard } from "./TopThreeLeaderboard"
 import { RemainingLeaderboard } from "./RemainingLeaderboard"
 import Sidebar from "@/modules/home/components/SideBar"
-
-const teamMembers: TeamMember[] = [
-    { id: 2, name: 'Sergio', challenges: 1847, rank: 2 },
-    { id: 1, name: 'David', challenges: 2430, rank: 1 },
-    { id: 3, name: 'Sofia', challenges: 1674, rank: 3 },
-    { id: 4, name: 'Sebastian', challenges: 1124 },
-    { id: 5, name: 'Jason', challenges: 875 },
-    { id: 6, name: 'Natalie', challenges: 774 }
-]
+import { useCompanyMetrics } from "@/modules/core/hooks/useApiHooks"
 
 function LeaderboardLayout() {
 
-    const topThree = teamMembers.filter((member) => member.rank && member.rank <= 3)
-    const remaining = teamMembers.filter((member) => !member.rank)
+    const { data: metrics } = useCompanyMetrics()
+
+    if (!metrics) return <div>Loading...</div>
+
+    const { top_students, average_scores_moment1, average_scores_moment2, average_scores_moment3 } = metrics.global;
+
+    const sortedTopStudents = [...top_students].sort((a, b) => b.total_challenges - a.total_challenges);
+    const topThree = sortedTopStudents.slice(0, 3);
+    const remaining = sortedTopStudents.slice(3);
+
+    // Get useCompanyMetrics hook
+
     return (
         <div className="bg-primary min-h-screen w-full mx-auto flex flex-col sm:flex-row">
             <Sidebar />
@@ -32,11 +33,15 @@ function LeaderboardLayout() {
                         <div className="rounded-lg flex flex-col items-center">
                             <div className="p-6 sm:w-3/4 w-full">
                                 <div className="relative w-full">
-                                    <TopThreeLeaderboard members={topThree} />
-                                    <RemainingLeaderboard members={remaining} />
+                                    {topThree.length > 0 && <TopThreeLeaderboard members={topThree} />}
+                                    {remaining.length > 0 && <RemainingLeaderboard members={remaining} />}
                                 </div>
                             </div>
-                            <ScoreProgress />
+                            <ScoreProgress
+                                averageScoreMoment1={average_scores_moment1.average_score}
+                                averageScoreMoment2={average_scores_moment2.average_score}
+                                averageScoreMoment3={average_scores_moment3.average_score}
+                            />
                         </div>
                     </div>
                     <aside>
