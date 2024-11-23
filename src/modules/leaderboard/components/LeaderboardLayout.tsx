@@ -11,7 +11,7 @@ function LeaderboardLayout() {
 
     if (!metrics) return <div>Loading...</div>
 
-    const { top_students, average_scores_moment1, average_scores_moment2, average_scores_moment3 } = metrics.global;
+    const { top_students, average_scores_moment1, average_scores_moment2, average_scores_moment3, total_completed_challenges, total_time, average_scores_global } = metrics.global;
 
     const sortedTopStudents = [...top_students].sort((a, b) => b.total_challenges - a.total_challenges);
     const topThree = sortedTopStudents.slice(0, 3);
@@ -45,7 +45,7 @@ function LeaderboardLayout() {
                         </div>
                     </div>
                     <aside>
-                        <StatsPanel />
+                        <StatsPanel total_completed_challenges={total_completed_challenges} total_time={total_time.total_time} average_score_globals={average_scores_global.average_score} />
                     </aside>
                 </main>
             </section>

@@ -112,8 +112,6 @@ export default function CodeEditor({ onCodeChange }: CodeRecorderProps) {
     return (
         <div className="w-full max-w-4xl mx-auto">
             <div>
-                <h2 className="text-2xl font-bold">Monaco Code Editor</h2>
-                <p className="text-gray-500">Pydiode ready {pyodideReady ? '✅' : '❌'}</p>
                 <ToggleGroup
                     type="single"
                     value={language}

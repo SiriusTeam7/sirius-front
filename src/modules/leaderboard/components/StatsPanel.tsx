@@ -1,8 +1,16 @@
 import { Clock, Trophy, Target } from 'lucide-react'
 import { useState } from 'react'
 
-export function StatsPanel() {
+interface StatsPanelProps {
+    total_completed_challenges: number;
+    total_time: number | null;
+    average_score_globals: number;
+}
+export function StatsPanel({ total_completed_challenges, total_time, average_score_globals }: StatsPanelProps) {
     const [statsFilter, setStatsFilter] = useState('company')
+
+    const parsedTime = total_time ? `${Math.floor(total_time / 24)}d ${total_time % 24}h` : '0d 0h'
+    const scoreOneDecimal = average_score_globals.toFixed(1)
     return (
         <div className="w-80 rounded-lg bg-gray-800 p-6 flex flex-col justify-around items-stretch">
             <h2 className="mb-4 text-xl text-white">Tu equipo en números</h2>
@@ -12,7 +20,7 @@ export function StatsPanel() {
                 <div className="flex items-center rounded-lg bg-gray-700 p-4">
                     <Clock className="mr-4 h-8 w-8 text-pink-400" />
                     <div>
-                        <div className="text-lg font-bold text-white">3d 12h</div>
+                        <div className="text-lg font-bold text-white">{parsedTime}</div>
                         <div className="text-sm text-gray-400">Tiempo en retos</div>
                     </div>
                 </div>
@@ -20,7 +28,7 @@ export function StatsPanel() {
                 <div className="flex items-center rounded-lg bg-gray-700 p-4">
                     <Trophy className="mr-4 h-8 w-8 text-green-400" />
                     <div>
-                        <div className="text-lg font-bold text-white">14 retos</div>
+                        <div className="text-lg font-bold text-white">{total_completed_challenges} retos</div>
                         <div className="text-sm text-gray-400">Completados</div>
                     </div>
                 </div>
@@ -28,7 +36,7 @@ export function StatsPanel() {
                 <div className="flex items-center rounded-lg bg-gray-700 p-4">
                     <Target className="mr-4 h-8 w-8 text-orange-400" />
                     <div>
-                        <div className="text-lg font-bold text-white">8.5/10</div>
+                        <div className="text-lg font-bold text-white">{scoreOneDecimal}/10</div>
                         <div className="text-sm text-gray-400">Puntaje promedio</div>
                     </div>
                 </div>
