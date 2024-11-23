@@ -8,10 +8,15 @@ const reviews: ReviewSection[] = [
 
 export function ScoreProgress() {
     return (
-        <div className="mt-8 flex items-center p-6">
+        <div className="mt-8 flex items-center sm:flex-row flex-col p-6">
             {reviews.map((review, index) => (
                 <>
 
+                    {
+                        index != 0 && (
+                            <hr className={`${review.change && review.change < 0 ? 'border-red-700' : 'border-green-500'} sm:border-t-2 border-t-0 sm:border-l-0 border-l-2 sm:w-5 sm:h-1 w-1 h-5`} />
+                        )
+                    }
                     <div
                         key={review.title}
                         className={`rounded-lg border p-4 self-stretch ${review.change && review.change < 0 ? 'border-red-500' : 'border-green-500'
@@ -35,11 +40,6 @@ export function ScoreProgress() {
                             )}
                         </div>
                     </div>
-                    {
-                        index < reviews.length - 1 && (
-                            <hr className="border-red-700 border-t-2 w-5" />
-                        )
-                    }
                 </>
             ))}
         </div>

@@ -27,10 +27,10 @@ function LeaderboardLayout() {
                     <h2 className="mb-6 text-xl text-white">Este es el progreso de tu equipo</h2>
                 </header>
 
-                <main className="flex gap-6 p-6">
+                <main className="flex sm:flex-row flex-col gap-6 p-6">
                     <div className="flex-1">
-                        <div className="rounded-lg  flex flex-col items-center">
-                            <div className="p-6 w-3/4">
+                        <div className="rounded-lg flex flex-col items-center">
+                            <div className="p-6 sm:w-3/4 w-full">
                                 <div className="relative w-full">
                                     <TopThreeLeaderboard members={topThree} />
                                     <RemainingLeaderboard members={remaining} />
