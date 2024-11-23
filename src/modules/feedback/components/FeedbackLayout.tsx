@@ -1,18 +1,9 @@
-import { ChevronRight } from "lucide-react";
 import { ThumbsUp, ThumbsDown } from "lucide-react"; // Íconos para "Me gusta" y "No me gusta"
 
-import { Button } from "@core/design-system/Button";
-import { ContentContainer } from "@core/components/ContentContainer";
 import { FeedbackLayoutProps } from "@interfaces/FeedbackLayout.interface";
-import { Next } from "@/assets/images";
+
 
 export default function FeedbackLayout({
-  challengeTitle,
-  feedbackText,
-  followUpLinks,
-  onRetake,
-  onGoHome,
-  onClose,
 }: FeedbackLayoutProps) {
   return (
     <div className="flex flex-col justify-center h-full bg-gray-800 rounded-lg p-6">

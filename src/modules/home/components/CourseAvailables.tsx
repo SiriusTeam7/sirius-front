@@ -1,7 +1,7 @@
 import Carousel from "@/modules/core/components/Carousel";
 import CourseCard from "@/modules/core/components/CourseCardt";
-import { Course, CourseSummary } from "@/modules/core/interfaces/Courses.interface";
-import { useNavigate } from "react-router-dom";
+import { Course } from "@/modules/core/interfaces/Courses.interface";
+//import { useNavigate } from "react-router-dom";
 import { useCourses } from "../hooks/useCourses";
 
 interface CoursesAvailableProps {
@@ -38,12 +38,12 @@ const courses2: Course[] = [
 const CourseAvailables: React.FC<CoursesAvailableProps> = ({
   section_title,
   section_subtitle,
-  type,
 }) => {
-  const navigate = useNavigate();
+//  const navigate = useNavigate();
   const {courses} = useCourses();
 
   const handleCardClick = () => {
+    console.log(courses2)
 //    navigate("/challenges", { state: { course } });
   };
 

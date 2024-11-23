@@ -36,14 +36,8 @@ export function useGetLogin(): UseMutationResult<
 
     onSuccess: (data) => {
       queryClient.setQueryData(["user", data], data);
-      // Get csrftoken and sessionid to save in cookies
-      const { csrftoken, sessionid } = data.user;
-
-      // Set cookies  
-      document.cookie = `csrftoken=${csrftoken}; path=/; SameSite=None; Secure`;
-      document.cookie = `sessionid=${sessionid}; path=/; SameSite=None; Secure`;
-      document.cookie = `csrftoken=${csrftoken}; path=/; domain=hack.siriusapi.online SameSite=None; Secure`;
-      document.cookie = `sessionid=${sessionid}; path=/; domain=hack.siriusapi.online SameSite=None; Secure`;
+      const { token } = data;
+      localStorage.setItem("authToken", token);
     },
     onError: (error) => {
       console.error("Error en el inicio de sesión:", error);

@@ -1,5 +1,5 @@
 import { useGetCourses } from "@/modules/core/hooks/useApiHooks";
-import { GetFeedbackRequest } from "@/modules/core/interfaces/Api.interface";
+//import { GetFeedbackRequest } from "@/modules/core/interfaces/Api.interface";
 import { Challenge } from "@/modules/core/interfaces/Shared.interface";
 import { useState } from "react";
 
@@ -16,27 +16,26 @@ export function useChallenges(challenges: Challenge[] = []) {
         setDialogStatus('challenge');
     }
 
-    const handleChallengeSubmit = (inputType: string, response: string | Blob) => {
+    const handleChallengeSubmit = (inputType: string, _response: string | Blob) => {
         setDialogStatus('loading');
 
-
         if (inputType === 'text') {
-            const feedbackRequest: GetFeedbackRequest = {
+           /* const feedbackRequest: GetFeedbackRequest = {
                 student_id: 1,
                 challenge_id: selectedChallenge?.id as number,
                 answer_type: 'text',
                 answer_text: response as string,
-            };
+            };*/
          //   mutation.mutate(feedbackRequest);
         } else if (inputType === 'audio') {
 
-            const audioFile = new File([response], 'response.mp3', { type: 'audio/mp3' })
-            const feedbackRequest: GetFeedbackRequest = {
+           // const audioFile = new File([response], 'response.mp3', { type: 'audio/mp3' })
+           /* const feedbackRequest: GetFeedbackRequest = {
                 student_id: 1,
                 challenge_id: selectedChallenge?.id as number,
                 answer_type: 'audio',
                 answer_audio: audioFile,
-            };
+            };*/
           //  mutation.mutate(feedbackRequest);
         }
 

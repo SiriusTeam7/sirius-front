@@ -1,7 +1,6 @@
 import { useGetCourses } from "@/modules/core/hooks/useApiHooks";
-import { GetFeedbackRequest } from "@/modules/core/interfaces/Api.interface";
 import { Challenge } from "@/modules/core/interfaces/Shared.interface";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useCourses() {
 
@@ -19,34 +18,7 @@ export function useCourses() {
         setDialogStatus('challenge');
     }
 
-    const handleChallengeSubmit = (inputType: string, response: string | Blob) => {
-        setDialogStatus('loading');
-
-
-        if (inputType === 'text') {
-            const feedbackRequest: GetFeedbackRequest = {
-                student_id: 1,
-                challenge_id: selectedChallenge?.id as number,
-                answer_type: 'text',
-                answer_text: response as string,
-            };
-         //   mutation.mutate(feedbackRequest);
-        } else if (inputType === 'audio') {
-
-            const audioFile = new File([response], 'response.mp3', { type: 'audio/mp3' })
-            const feedbackRequest: GetFeedbackRequest = {
-                student_id: 1,
-                challenge_id: selectedChallenge?.id as number,
-                answer_type: 'audio',
-                answer_audio: audioFile,
-            };
-          //  mutation.mutate(feedbackRequest);
-        }
-
-    };
-
-
-    const handleCardClick = (id: string | number) => {
+    const handleCardClick = (_id: string | number) => {
         setOpenDialog(true);
        // setSelectedChallenge(challenges?.find((challenge) => challenge.id === id) || null);
     }
@@ -62,7 +34,6 @@ export function useCourses() {
         dialogStatus,
         courses,
         handleCloseDialog,
-        handleChallengeSubmit,
         handleCardClick,
         handleRetry,
     };
