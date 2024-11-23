@@ -1,10 +1,12 @@
 export interface Challenge {
   id: number;
-  course_id: number;
-  course_title: string;
-  text: string;
-  icon: string;
-  course_color: string;
+  challenge: string;
+  hints: string[];
+  is_code_challenge: boolean;
+  programming_language: string;
+  estimated_solution_time: string;
+  use_cases_input: string[];
+  use_cases_output: string[];
 }
 
 export interface ChallengeCover {
@@ -13,4 +15,5 @@ export interface ChallengeCover {
   status: number; 
   score?: number;
   date: string; 
+  student_id: number;
 }

@@ -21,6 +21,7 @@ const CourseAvailables: React.FC<CoursesAvailableProps> = ({
   const navigate = useNavigate();
 
   const handleCardClick = (course: Course) => {
+    console.log(course);
     navigate("/challenges", { state: { course } });
   };
 
@@ -48,7 +49,7 @@ const CourseAvailables: React.FC<CoursesAvailableProps> = ({
         <Carousel cardWidth={300}>
           {coursesMoments?.map((course) => (
             <CourseCard
-              key={course.course_id}
+              key={course.course}
               course={course}
               onClick={() => handleCardClick(course)}
             />

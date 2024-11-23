@@ -1,21 +1,46 @@
+import { useGetChallenge } from "@/modules/core/hooks/useApiHooks";
+import {
+  GetChallengeRequest,
+  GetFeedbackRequest,
+} from "@/modules/core/interfaces/Api.interface";
+import { Challenge } from "@/modules/core/interfaces/Shared.interface";
 import { useEffect, useState } from "react";
 
 export function useStateChallenge(
-  onSubmit: (
-    inputMode: "text" | "audio" | "code",
-    response: string | Blob
-  ) => void,
-  initialTime: number
+  student_id: number,
+  course_id: number,
+  moment: number,
+  initialTime: number,
+  submitFeedback: (feedbackRequest: GetFeedbackRequest) => void
 ) {
   const [inputMode, setInputMode] = useState<"text" | "audio" | "code">("code");
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [audioBlob, setAudioBlob] = useState<Blob>(new Blob());
   const [response, setResponse] = useState("");
-  const [timeLeft, setTimeLeft] = useState(initialTime); 
-  const [submitStatus, setSubmitStatus] = useState<"challenge" | "loading" | "feedback">("challenge");
-  const [feedback, setFeedback] = useState(""); // Feedback recibido
-
+  const [submitStatus, setSubmitStatus] = useState<
+    "challenge" | "loading" | "feedback"
+  >("challenge");
+  const { mutate } = useGetChallenge();
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
+    if (!challenge) {
+      const challengeData: GetChallengeRequest = { student_id, course_id };
+      mutate(challengeData, {
+        onSuccess: (data) => {
+          initialTime = data.is_code_challenge ? 40 * 60 : 15 * 60;
+          setChallenge(data);
+        },
+      });
+    }
+  }, [mutate, challenge]);
+
+  useEffect(() => {
+    if (challenge?.is_code_challenge) {
+      setTimeLeft(40 * 60);
+    } else {
+      setTimeLeft(15 * 60);
+    }
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => Math.max(prevTime - 1, 0));
     }, 1000);
@@ -38,29 +63,46 @@ export function useStateChallenge(
     setAudioBlob(blob);
   };
 
+  const handleCodeEditor = (code: string) => {
+    setResponse(code);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!response.trim()) {
-      //alert("Por favor ingresa tu respuesta antes de enviar.");
-      //return;
-    }
-    if (inputMode === "audio") {
-        onSubmit(inputMode, audioBlob!);
-      } else {
-        onSubmit(inputMode, response);
-      }
-
     setSubmitStatus("loading");
-
-    // Simular la llamada al API para enviar la respuesta
-    setTimeout(() => {
-      const simulatedFeedback = "¡Buena respuesta! Intenta mejorar tu gramática.";
-      setFeedback(simulatedFeedback);
-      setSubmitStatus("feedback"); 
-    }, 5000); 
+    let feedbackRequest: GetFeedbackRequest;
+    if (challenge?.is_code_challenge) {
+      feedbackRequest = {
+        challenge_id: challenge.id,
+        answer_type: "code",
+        answer_text: response as string,
+        student_id: student_id,
+        moment: moment,
+      };
+    } else if (inputMode === "audio") {
+      const audioFile = new File([audioBlob], "response.mp3", {
+        type: "audio/mp3",
+      });
+      feedbackRequest = {
+        student_id: 1,
+        challenge_id: challenge?.id,
+        answer_type: "audio",
+        answer_audio: audioFile,
+        moment: moment,
+      };
+    } else {
+      feedbackRequest = {
+        answer_type: inputMode,
+        answer_text: response as string,
+        student_id: student_id,
+        challenge_id: challenge?.id,
+        moment: moment,
+      };
+    }
+    
+    submitFeedback(feedbackRequest);
   };
-
 
   const isSubmitDisabled =
     (inputMode === "text" && !response) ||
@@ -71,7 +113,7 @@ export function useStateChallenge(
     timeLeft,
     borderColor,
     inputMode,
-    feedback,
+    handleCodeEditor,
     submitStatus,
     setInputMode,
     handleSubmit,
@@ -80,5 +122,7 @@ export function useStateChallenge(
     response,
     setResponse,
     isSubmitDisabled,
+    challenge,
+    setSubmitStatus
   };
 }

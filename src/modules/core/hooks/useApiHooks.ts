@@ -13,6 +13,8 @@ import {
   getValidateCookiesApi,
   getCoursesApi,
   getCoursesMomentsApi,
+  getScoreChallengeApi,
+  getRatingChallengeApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -20,8 +22,10 @@ import {
   Feedback,
   LoginRequest,
   LoginResponse,
+  RatingChallengeRequest,
+  Rating,
 } from "@interfaces/Api.interface";
-import { Challenge } from "@interfaces/Shared.interface";
+import { Challenge, ChallengeCover } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
 import { Course, CourseSummary } from "../interfaces/Courses.interface";
 
@@ -51,7 +55,24 @@ export function useGetCourses(): UseQueryResult<CourseSummary[], Error> {
     queryKey: ["coursesCompleted"],
     queryFn: async () => {
       const res = await getCoursesApi();
-      return res.data
+      return res.data;
+    },
+    throwOnError: (error) => {
+      console.error("Error fetching all courses sumary:", error);
+      return false;
+    },
+  });
+}
+
+export function useGetScoreChallenge(): UseQueryResult<
+  ChallengeCover[],
+  Error
+> {
+  return useQuery({
+    queryKey: ["challengesScore"],
+    queryFn: async () => {
+      const res = await getScoreChallengeApi();
+      return res.data;
     },
     throwOnError: (error) => {
       console.error("Error fetching all courses sumary:", error);
@@ -65,8 +86,7 @@ export function useGetMomentsCourses(): UseQueryResult<Course[], Error> {
     queryKey: ["courses"],
     queryFn: async () => {
       const res = await getCoursesMomentsApi();
-      console.log("🚀 ~ file: useApiHooks.ts ~ line 100 ~ useQuery ~ res", res)
-      return res.data
+      return res.data;
     },
     throwOnError: (error) => {
       console.error("Error fetching all courses sumary:", error);
@@ -75,38 +95,51 @@ export function useGetMomentsCourses(): UseQueryResult<Course[], Error> {
   });
 }
 
-
 export function useGetChallenge(): UseMutationResult<
   Challenge,
   Error,
   GetChallengeRequest
 > {
   return useMutation({
-    mutationFn: (data: GetChallengeRequest) =>
-      getChallengeApi(data).then((res) => res.data),
+    mutationFn: async (data: GetChallengeRequest) => {
+      const res = await getChallengeApi(data);
+      const parsedChallenge: Challenge = JSON.parse(res.data.challenge);
+      parsedChallenge.id = res.data.challenge_id;
+      return parsedChallenge;
+    },
+    onSuccess: (data) => {
+      console.log("🚀 ~ data:", data);
+      //queryClient.setQueryData(["feedback", data], data);
+      
+    }
+  });
+}
+//getFeedbackApi
+export function useGetFeedback(): UseMutationResult<Feedback, Error, GetFeedbackRequest>
+ {
+  return useMutation({
+    mutationFn: async (data: GetFeedbackRequest) =>{
+      const res = await getFeedbackApi(data);
+      const feedbackParsed: Feedback = JSON.parse(res.data.feedback);
+      return feedbackParsed;
+    },
     onError: (error) => {
-      console.error("Error fetching challenge:", error);
+      
+      console.error("Error fetching feedback:", error);
     },
   });
 }
 
-export function useGetFeedback(
-  setDialogStatus: React.Dispatch<
-    React.SetStateAction<"challenge" | "loading" | "feedback" | "error">
-  >
-): UseMutationResult<Feedback, Error, GetFeedbackRequest> {
-  const queryClient = useQueryClient();
+//getRatingChallengeApi
+export function useRatingChallenge(): UseMutationResult<Rating, Error, RatingChallengeRequest>
+ {
   return useMutation({
-    mutationFn: (data: GetFeedbackRequest) =>
-      getFeedbackApi(data).then((res) => res.data),
-    onError: (error) => {
-      setDialogStatus("error");
-      console.error("Error fetching feedback:", error);
+    mutationFn: async (data: RatingChallengeRequest) =>{
+      const res = await getRatingChallengeApi(data);
+      return res.data;
     },
-    onSuccess: (data) => {
-      console.log("🚀 ~ data:", data);
-      queryClient.setQueryData(["feedback", data], data);
-      setDialogStatus("feedback");
+    onError: (error) => {
+      console.error("Error fetching feedback:", error);
     },
   });
 }
@@ -118,7 +151,7 @@ export function useGetAllChallenges(): UseQueryResult<Challenge[], Error> {
       const res = await getAllChallengesApi();
       return res.data.map((challenge: Challenge) => ({
         ...challenge,
-        icon: challenge.icon || getRandomIcon(),
+        icon:  getRandomIcon(),
       }));
     },
     staleTime: 5 * 60 * 1000, // 5 minutes

@@ -1,6 +1,6 @@
 export interface Course {
   id: number;
-  course_id: number;
+  course: number;
   course_title: string;
   is_completed1: boolean;
   is_completed2: boolean;
