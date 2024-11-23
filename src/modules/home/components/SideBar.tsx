@@ -10,7 +10,7 @@ import {
 const Sidebar = () => {
   return (
     <div>
-      <div className="hidden sm:flex flex-col bg-primary h-screen w-48 items-start px-4 py-6 space-y-6 text-white">
+      <div className="hidden sm:flex flex-col bg-primary h-screen w-48 items-start pr-4 py-6 space-y-6 text-white">
         <div className="flex items-center justify-center w-full">
           <img src={platzi} alt="Logo" className="h-24" />
         </div>
@@ -18,36 +18,36 @@ const Sidebar = () => {
         <nav className="flex flex-col space-y-6 w-full">
           <a
             href="/inicio"
-            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 pl-4 w-full"
           >
             <img src={home} alt="Inicio" className="h-6 w-6" />
             <span className="ml-3">Inicio</span>
           </a>
           <a
             href="/mis-rutas"
-            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 pl-4 w-full"
           >
             <img src={routes} alt="Mis Rutas" className="h-6 w-6" />
             <span className="ml-3">Mis Rutas</span>
           </a>
           <a
             href="/mi-progreso"
-            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 pl-4 w-full"
           >
             <img src={progress} alt="Mi Progreso" className="h-6 w-6" />
             <span className="ml-3">Mi Progreso</span>
           </a>
           <a
             href="/chat-ada"
-            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 pl-4 w-full"
           >
             <img src={chat} alt="Chat ADA" className="h-6 w-6" />
             <span className="ml-3">Chat ADA</span>
           </a>
-          
+
           <a
             href="/"
-            className="flex items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
+            className="flex items-center hover:bg-[#1E293B] rounded-md rounded-l-none p-2 pl-4 w-full border-l-2 border-[#0AE98A]"
           >
             <img src={SiriusMenu} alt="Sirius" className="h-6 w-6" />
             <span className="ml-3">Mis retos</span>
@@ -58,7 +58,7 @@ const Sidebar = () => {
       </div>
 
       <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-primary h-16 flex items-center justify-around text-white">
-    
+
         <nav className="flex justify-around w-full">
           <a href="/mis-rutas" className="flex justify-center items-center hover:bg-[#1E293B] rounded-md p-2 w-full">
 
@@ -81,6 +81,12 @@ const Sidebar = () => {
             className="flex justify-center items-center hover:bg-[#1E293B] rounded-md p-2 w-full"
           >
             <img src={chat} alt="Chat ADA" className="h-6 w-6" />
+          </a>
+          <a
+            href="/"
+            className="flex justify-center items-center hover:bg-[#1E293B] rounded-t-md p-2 w-full border-b-2 border-[#0AE98A]"
+          >
+            <img src={SiriusMenu} alt="Sirius" className="h-6 w-6" />
           </a>
 
         </nav>
