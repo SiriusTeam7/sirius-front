@@ -5,7 +5,7 @@ interface FactCardProps {
   iconBgColor: string;
 }
 
-const   FactCard = ({
+const FactCard = ({
   title,
   subtitle,
   icon,
@@ -16,7 +16,7 @@ const   FactCard = ({
       <div
         className={`flex items-center justify-center w-12 h-12 bg-[${iconBgColor}] rounded-md`}
       >
-       <img src={icon} className="w-6 h-12" />
+        <img src={icon} className="w-6 h-12" />
       </div>
       <div className="ml-4">
         <div className="text-white font-semibold">{title}</div>

@@ -66,7 +66,7 @@ export default function FeedbackLayout({
       {/* Flashcards */}
       <div className="mt-5 flex-col justify-center">
         <h1>Refuerza con este contenido</h1>
-        <div className="grid grid-cols-3 gap-4 w-full mt-2">
+        <div className="grid sm:grid-cols-3 grid-rows-3 gap-4 w-full mt-2">
           <div className="p-2 bg-[#1F2127] rounded-lg  border border-gray-300 shadow-lg">
             <p className="text-sm	">Clase 16 de x contenido para de repaso</p>
             <div className="flex justify-end mt-3">
