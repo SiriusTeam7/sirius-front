@@ -1,12 +1,6 @@
-interface FeedbackLink {
-  title: string;
-  url: string;
-}
+import { Feedback } from "./Api.interface";
+
 export interface FeedbackLayoutProps {
-  challengeTitle: string;
-  feedbackText: string;
-  followUpLinks: FeedbackLink[];
-  onClose: () => void;
-  onRetake: () => void;
-  onGoHome: () => void;
+  feedback?: Feedback;
+  challenge_id?: number;
 }

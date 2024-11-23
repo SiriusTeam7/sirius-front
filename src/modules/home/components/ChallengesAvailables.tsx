@@ -1,57 +1,73 @@
-
-//import { useGetAllChallenges } from '@/modules/core/hooks/useApiHooks';
-import { useLocation } from 'react-router-dom';
-//import { useChallenges } from '../hooks/useChallenges';
-import ChallengeCard from '@/modules/core/components/CallengeCard';
-
+import { useLocation } from "react-router-dom";
+import ChallengeCard from "@/modules/core/components/CallengeCard";
+import { getMomentStatus } from "../utils/getMoment";
+import { useGetScoreChallenge } from "@/modules/core/hooks/useApiHooks";
 
 const ChallengesAvailable = () => {
+  const location = useLocation();
+  const { course } = location.state || {};
+  const { data: scoresChallenges } = useGetScoreChallenge();
 
-    const location = useLocation();
-    const { course } = location.state || {}; 
-    console.log(course);
-  //  const { data: challengesData } = useGetAllChallenges();
+  const space_memories = [
+    {
+      id: 1,
+      course_id: course.course,
+      status: getMomentStatus(course.is_completed1, course.moment1),
+      score: undefined,
+      date: course.moment1,
+      student_id: course.student_id,
+    },
+    {
+      id: 2,
+      course_id: course.course,
+      status: getMomentStatus(course.is_completed2, course.moment2),
+      score: undefined,
+      date: course.moment2,
+      student_id: course.student_id,
+    },
+    {
+      id: 3,
+      course_id: course.course,
+      status: getMomentStatus(course.is_completed3, course.moment3),
+      score: undefined,
+      date: course.moment3,
+      student_id: course.student_id,
+    },
+  ];
 
-   const challenges = [
-    {id: 1, course_id: 101, status: 1, score: 6.7, date: '2024-11-05'},
-    {id: 2, course_id: 101, status: 2, score: undefined, date: '2024-11-21'},
-    {id: 3, course_id: 101, status: 3, score: undefined, date: '2024-12-05'},
-   ]
+  const completedChallenges = scoresChallenges;
 
-   const completedChallenges = [
-    {id: 1, course_id: 101, status: 1, score: 6.7, date: '2024-11-05'},
-    {id: 2, course_id: 101, status: 1, score: 7, date: '2024-11-21'},
-    {id: 3, course_id: 101, status: 1, score: 8, date: '2024-12-05'},   
-   ]
-
-   /*const { 
-        openDialog,
-        selectedChallenge,
-        dialogStatus,
-        mutation,
-        handleCloseDialog,
-        handleChallengeSubmit,
-        handleCardClick,
-        handleRetry,
-    } = useChallenges(challengesData);*/
-
-    return (
-        <div className="p-3 sm:p-4">
-            <h2 className="title-large text-center sm:text-left">Retos de: {course.course_title}</h2>
-            <p className="text-lg font-bold">{"Así va tu repaso"}</p>
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
-                {challenges?.map((challenge) => (
-                    <ChallengeCard challenge={challenge}  />
-                ))}
-            </div>
-            <p className="text-lg font-bold">{"Retos completados"}</p>
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
-                {completedChallenges?.map((challenge) => (
-                    <ChallengeCard challenge={challenge}  />
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className="p-3 sm:p-4">
+      <h2 className="title-large text-center sm:text-left">
+        Retos de: {course.course_title}
+      </h2>
+      <p className="text-lg font-bold">{"Así va tu repaso"}</p>
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
+        {space_memories?.map((challenge) => (
+          <ChallengeCard challenge={challenge} />
+        ))}
+      </div>
+      <p className="text-lg font-bold">{"Retos completados"}</p>
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-start items-center gap-4 p-3 sm:p-5">
+        {scoresChallenges != null  ? (
+          completedChallenges!.map((challenge) => (
+            <ChallengeCard challenge={challenge} key={challenge.id} />
+          ))
+        ) : (
+          <div className="text-center p-6">
+            <p className="text-lg font-bold text-gray-300">
+              ¡Aquí aparecerán los retos que completes!
+            </p>
+            <p className="text-sm text-gray-400">
+              ¿Qué tal empezar tu primer reto? ¡Anímate a mejorar tus
+              habilidades y repasar lo aprendido!
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ChallengesAvailable;
