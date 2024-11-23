@@ -1,5 +1,5 @@
 import Sidebar from "@/modules/home/components/SideBar";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import CourseAvailables from "@/modules/home/components/CourseAvailables";
 import FactsLayout from "@/modules/home/components/FactsLayout";
 import { Cohete } from "@/assets/images";
@@ -27,10 +27,7 @@ function MainLayout() {
             <CourseAvailables type="completed" section_title={"Repasos completados"} />
           </section>
         )}
-        {location.pathname !== "/" && (
-
-          <h1 className="text-2xl font-bold">This is an MVP ¯\_(ツ)_/¯</h1>
-        )}
+        <Outlet />
       </main>
     </div>
   );

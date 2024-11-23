@@ -20,7 +20,7 @@ const App = () => {
             </ProtectedRoute>
           }
         >
-          <Route path="challenges" element={<ChallengesAvailable />} />
+          <Route path="/challenges" element={<ChallengesAvailable />} />
         </Route>
         <Route
           path="/practice"
