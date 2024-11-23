@@ -3,6 +3,7 @@ import Login from "./modules/login/components/Login";
 import MainLayout from "@/modules/core/components/MainLayout";
 
 import { ProtectedRoute } from "./modules/login/hoc/withAuth";
+import LeaderboardLayout from "./modules/leaderboard/components/LeaderboardLayout";
 import ChallengeLayout from "./modules/challenge/components/ChallengeLayout";
 import "../src/styles/styles.css";
 import ChallengesAvailable from "./modules/home/components/ChallengesAvailables";
@@ -29,6 +30,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardLayout /></ProtectedRoute>} />
+        <Route path="*" element={<ProtectedRoute><MainLayout /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

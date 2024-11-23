@@ -15,6 +15,7 @@ import {
   getCoursesMomentsApi,
   getScoreChallengeApi,
   getRatingChallengeApi,
+  getCompanyMetricsApi,
 } from "@core/config/apiConfig";
 import {
   GetChallengeRequest,
@@ -28,6 +29,7 @@ import {
 import { Challenge, ChallengeCover } from "@interfaces/Shared.interface";
 import { getRandomIcon } from "@/modules/core/lib/utils";
 import { Course, CourseSummary } from "../interfaces/Courses.interface";
+import { MetricsResponse } from "../interfaces/Leaderboard.interface";
 
 export function useGetLogin(): UseMutationResult<
   LoginResponse,
@@ -110,31 +112,35 @@ export function useGetChallenge(): UseMutationResult<
     onSuccess: (data) => {
       console.log("🚀 ~ data:", data);
       //queryClient.setQueryData(["feedback", data], data);
-      
-    }
+    },
   });
 }
 //getFeedbackApi
-export function useGetFeedback(): UseMutationResult<Feedback, Error, GetFeedbackRequest>
- {
+export function useGetFeedback(): UseMutationResult<
+  Feedback,
+  Error,
+  GetFeedbackRequest
+> {
   return useMutation({
-    mutationFn: async (data: GetFeedbackRequest) =>{
+    mutationFn: async (data: GetFeedbackRequest) => {
       const res = await getFeedbackApi(data);
       const feedbackParsed: Feedback = JSON.parse(res.data.feedback);
       return feedbackParsed;
     },
     onError: (error) => {
-      
       console.error("Error fetching feedback:", error);
     },
   });
 }
 
 //getRatingChallengeApi
-export function useRatingChallenge(): UseMutationResult<Rating, Error, RatingChallengeRequest>
- {
+export function useRatingChallenge(): UseMutationResult<
+  Rating,
+  Error,
+  RatingChallengeRequest
+> {
   return useMutation({
-    mutationFn: async (data: RatingChallengeRequest) =>{
+    mutationFn: async (data: RatingChallengeRequest) => {
       const res = await getRatingChallengeApi(data);
       return res.data;
     },
@@ -151,7 +157,7 @@ export function useGetAllChallenges(): UseQueryResult<Challenge[], Error> {
       const res = await getAllChallengesApi();
       return res.data.map((challenge: Challenge) => ({
         ...challenge,
-        icon:  getRandomIcon(),
+        icon: getRandomIcon(),
       }));
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -171,6 +177,20 @@ export function useValidateCookies(): UseQueryResult<LoginResponse, Error> {
     },
     throwOnError: (error) => {
       console.error("Error validating cookies:", error);
+      return false;
+    },
+  });
+}
+
+export function useCompanyMetrics(): UseQueryResult<MetricsResponse, Error> {
+  return useQuery({
+    queryKey: ["companyMetrics"],
+    queryFn: async () => {
+      const res = await getCompanyMetricsApi();
+      return res.data;
+    },
+    throwOnError: (error) => {
+      console.error("Error fetching company metrics:", error);
       return false;
     },
   });

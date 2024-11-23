@@ -12,6 +12,7 @@ import {
 } from "@interfaces/Api.interface";
 import { Challenge } from "../interfaces/Shared.interface";
 import { Course, CourseSummary } from "../interfaces/Courses.interface";
+import { MetricsResponse } from "../interfaces/Leaderboard.interface";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -109,6 +110,13 @@ export const getAllChallengesApi = (): Promise<AxiosResponse<Challenge[]>> =>
 
 export const getValidateCookiesApi = (): Promise<AxiosResponse<Challenge[]>> =>
   apiClient.get<Challenge[]>("/api/validate-cookies/", {
+    withCredentials: true,
+  });
+
+export const getCompanyMetricsApi = (): Promise<
+  AxiosResponse<MetricsResponse>
+> =>
+  apiClient.get<MetricsResponse>("/api/company-metrics/", {
     withCredentials: true,
   });
 
