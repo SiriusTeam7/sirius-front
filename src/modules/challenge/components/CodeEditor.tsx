@@ -5,6 +5,7 @@ import { Editor, EditorProps } from "@monaco-editor/react"
 import * as monaco from 'monaco-editor'
 import { Button } from "@/modules/core/design-system/Button"
 import { useCompiler } from "../hooks/useCompiler"
+import { CodeRecorderProps } from "@/modules/core/interfaces/CodeRecorder.interface"
 
 const defaultJsCode = `function greet(name) {
     console.log(\`Hello, \${name}!\`);
@@ -24,7 +25,7 @@ const submitCode = async (code: string) => {
     return { success: true, message: 'Code submitted successfully 🚀' }
 }
 
-export default function CodeEditor() {
+export default function CodeEditor({ onCodeChange }: CodeRecorderProps) {
     const [language, setLanguage] = useState<'javascript' | 'python'>('javascript')
     const [code, setCode] = useState({
         javascript: defaultJsCode,
@@ -42,6 +43,7 @@ export default function CodeEditor() {
                 ...prevCode,
                 [language]: value,
             }))
+            onCodeChange(code[language])
             // Clear syntax error when code changes
             setSyntaxError(null)
             setExecutionResult(null)

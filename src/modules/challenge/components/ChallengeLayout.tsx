@@ -8,58 +8,57 @@ import CodeEditor from "./CodeEditor";
 import { useStateChallenge } from "../hooks/useStateChallange";
 import LoadingWithFeedback from "./Loading";
 import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
-
+import { useLocation } from "react-router-dom";
+import {
+  Feedback,
+  GetFeedbackRequest,
+} from "@/modules/core/interfaces/Api.interface";
+import { useGetFeedback } from "@/modules/core/hooks/useApiHooks";
 export default function ChallengeLayout() {
-  const isCodeChallenge = true;
   const [inputMode, setInputMode] = useState("text");
-  const { formatTime, timeLeft, borderColor, submitStatus, handleSubmit } = useStateChallenge(
-    () => {},
-    600
-  );
+  const location = useLocation();
+  const { course_id, moment, student_id } = location.state || {};
+  const [feedback, setFeedback] = useState<Feedback>();
+
+  const { mutate } = useGetFeedback();
+
+
+  const submitFeedback = (feedbackRequest: GetFeedbackRequest) => {
+    mutate(feedbackRequest, {
+      onSuccess: (data) => {
+        data.challenge_id = challenge?.id || 0;
+        setSubmitStatus("feedback");
+        setFeedback(data);
+      },
+    });
+  };
+
+  const {
+    formatTime,
+    timeLeft,
+    borderColor,
+    submitStatus,
+    handleSubmit,
+    handleAudioRecorded,
+    isSubmitDisabled,
+    response,
+    handleCodeEditor,
+    challenge,
+    setSubmitStatus,
+  } = useStateChallenge(student_id, course_id, moment, 20 * 60, submitFeedback);
 
   const renderChallenge = () => {
     return (
       <div className="flex flex-col items-start justify-start ">
         <div className="w-full h-full p-6 rounded-lg  bg-gray-800">
-          {isCodeChallenge ? (
-            <CodeEditor />
+          {challenge?.is_code_challenge ? (
+            <CodeEditor onCodeChange={handleCodeEditor} />
           ) : (
             <>
-              <p className="text-gray-300">
-                Estás usando un bucle for para revisar una lista de nombres,
-                pero notas que también procesa espacios en blanco. ¿En qué
-                aspectos está la lista mal diseñada o el bucle mal configurado?
-                ¿Cómo lo arreglarías?
-              </p>
+              <p className="text-gray-300">{challenge?.challenge}</p>
               <div className="mt-16 flex justify-center">
                 <div className="grid grid-cols-3 gap-4 w-full ">
-                  <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                    <p className="font-bold">Flashcard 1</p>
-                    <p className="text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nisi accusantium doloribus, commodi, molestiae earum
-                      officiis iure autem cumque perferendis excepturi dolores
-                      dolor
-                    </p>
-                  </div>
-                  <div className="p-2 bg-[#1F2127] rounded-lg text-center border border-secondary shadow-lg">
-                    <p className="font-bold">Flashcard 2</p>
-                    <p className="text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nisi accusantium doloribus, commodi, molestiae earum
-                      officiis iure autem cumque perferendis excepturi dolores
-                      dolor
-                    </p>
-                  </div>
-                  <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                    <p className="font-bold">Flashcard 3</p>
-                    <p className="text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Nisi accusantium doloribus, commodi, molestiae earum
-                      officiis iure autem cumque perferendis excepturi dolores
-                      dolor
-                    </p>
-                  </div>
+                  {renderHints()}
                 </div>
               </div>
             </>
@@ -80,28 +79,23 @@ export default function ChallengeLayout() {
           </div>
         </div>
 
-        {/* Contenido principal: Reto o TextArea */}
         <div className="mt-4 flex flex-col items-center justify-content">
-          {isCodeChallenge ? (
-            // Descripción del reto para retos de código
+          {challenge?.is_code_challenge ? (
             <div className="p-4 bg-[#1F2127] rounded-lg w-full shadow-md border border-white/70 mx-auto">
-              <p className="text-gray-300">
-                Estás usando un bucle for para revisar una lista de nombres,
-                pero notas que también procesa espacios en blanco. ¿En qué
-                aspectos está la lista mal diseñada o el bucle mal configurado?
-                ¿Cómo lo arreglarías?
-              </p>
+              <p className="text-gray-300">{challenge.challenge}</p>
             </div>
           ) : (
             <div className="relative w-full">
               {/* TextArea */}
               {inputMode === "audio" ? (
-                <AudioRecorder onAudioRecorded={() => {}} />
+                <AudioRecorder onAudioRecorded={handleAudioRecorded} />
               ) : (
                 <Textarea
                   id="response"
-                  value={undefined}
-                  onChange={() => {}}
+                  value={response}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    handleCodeEditor(e.target.value)
+                  }
                   placeholder="¿Cómo resuelves este problema?"
                   className="w-full h-48 rounded-lg p-4"
                 />
@@ -135,43 +129,41 @@ export default function ChallengeLayout() {
           <Button type="submit" size="lg" variant="outline">
             Saltar reto
           </Button>
-          <Button type="submit" size="lg" variant="secondary" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            size="lg"
+            variant="secondary"
+            onClick={handleSubmit}
+            disabled={isSubmitDisabled}
+          >
             Enviar
           </Button>
         </div>
 
         {/* Flashcards */}
-        {isCodeChallenge && (
-          <div className="mt-5 flex justify-center">
-            <div className="grid grid-cols-3 gap-4 w-full ">
-              <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                <p className="text-sm font-bold">Flashcard 1</p>
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-                  accusantium doloribus, commodi, molestiae earum officiis iure
-                  autem cumque perferendis excepturi dolores dolor
-                </p>
-              </div>
-              <div className="p-2 bg-[#1F2127] rounded-lg text-center border border-secondary shadow-lg">
-                <p className="text-sm font-bold">Flashcard 2</p>
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-                  accusantium doloribus, commodi, molestiae earum officiis iure
-                  autem cumque perferendis excepturi dolores dolor
-                </p>
-              </div>
-              <div className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg">
-                <p className="text-sm font-bold">Flashcard 3</p>
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-                  accusantium doloribus, commodi, molestiae earum officiis iure
-                  autem cumque perferendis excepturi dolores dolor
-                </p>
-              </div>
-            </div>
+        <div className="mt-5 flex justify-center">
+          <div className="grid grid-cols-3 gap-4 w-full ">
+            {challenge?.is_code_challenge && renderHints()}
           </div>
-        )}
+        </div>
       </div>
+    );
+  };
+
+  const renderHints = () => {
+    return (
+      <>
+        {challenge &&
+          challenge!.hints!.map((hint, index) => (
+            <div
+              key={index}
+              className="p-2 bg-[#1F2127] rounded-lg text-center  border border-secondary shadow-lg"
+            >
+              <p className="text-sm font-bold">Tip {index + 1}</p>
+              <p className="text-sm">{hint}</p>
+            </div>
+          ))}
+      </>
     );
   };
 
@@ -180,7 +172,9 @@ export default function ChallengeLayout() {
       <SideNav />
       <div className="bg-primary  w-full mx-auto flex flex-col p-2">
         <div className="mt-12">
-          <h1 className="text-2xl font-bold text-start">Título del Reto</h1>
+          <h1 className="text-2xl font-bold text-start">
+            Práctica lo que has aprendido
+          </h1>
         </div>
         <div className="bg-primary  w-full mx-auto mt-4 grid grid-cols-2 gap-4">
           {renderChallenge()}
@@ -189,20 +183,7 @@ export default function ChallengeLayout() {
           {submitStatus === "challenge" && renderAnswer()}
           {submitStatus === "loading" && <LoadingWithFeedback />}
           {submitStatus === "feedback" && (
-            <FeedbackLayout
-              challengeTitle={""}
-              feedbackText={""}
-              followUpLinks={[]}
-              onClose={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-              onRetake={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-              onGoHome={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+            <FeedbackLayout feedback={feedback} challenge_id={challenge?.id} />
           )}
         </div>
       </div>

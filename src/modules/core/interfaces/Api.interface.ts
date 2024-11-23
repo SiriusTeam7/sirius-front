@@ -3,18 +3,25 @@ export interface GetChallengeRequest {
   course_id: number;
 }
 
+export interface ChallengeResponse {
+  challenge: string;
+  challenge_id: number;
+}
+
 interface GetFeedbackTextRequest {
   student_id: number;
-  challenge_id: number;
+  challenge_id?: number;
   answer_type: string;
   answer_text: string;
+  moment? : number;
 }
 
 interface GetFeedbackAudioRequest {
   student_id: number;
-  challenge_id: number;
+  challenge_id?: number;
   answer_type: string;
   answer_audio: File;
+  moment? : number;
 }
 
 export type GetFeedbackRequest =
@@ -23,6 +30,18 @@ export type GetFeedbackRequest =
 
 export interface Feedback {
   feedback: string;
+  score_average: number;
+  class_recommendations: string[];
+  challenge_id: number;
+}
+
+export interface Rating {
+  rating: number;
+}
+
+export interface RatingChallengeRequest {
+  challenge_id: number;
+  rating: number;
 }
 
 export interface LoginRequest {
