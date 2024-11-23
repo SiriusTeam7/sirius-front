@@ -3,6 +3,7 @@ import { siriusImage, loading } from "@/assets/images";
 import { Button } from "../../core/design-system/Button";
 import { useLogin } from "../hooks/useLogin";
 import RegisterForm from "./RegisterForm";
+import ErrorMessage from "@/modules/core/design-system/Error";
 
 const Login = () => {
   const [showRegister, setShowRegister] = useState(false);
@@ -14,6 +15,7 @@ const Login = () => {
     setPassword,
     handleSubmit,
     isLoading,
+    error
   } = useLogin();
 
   return (
@@ -28,6 +30,7 @@ const Login = () => {
               {"Iniciar sesión"}
             </h1>
             <div className="relative space-y-4">
+              
               <input
                 type="email"
                 placeholder="Username"
@@ -43,7 +46,10 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              
             </div>
+            {error && <ErrorMessage message={error} />}
+
             <Button
               className="w-full bg-white hover:bg-gray-100 text-black flex items-center justify-center gap-2 py-6"
               onClick={handleSubmit}
@@ -51,6 +57,7 @@ const Login = () => {
             >
               {isLoading ? <img src={loading} alt="Loading" /> : <>Continuar</>}
             </Button>
+            
             <div className="flex justify-end">
               <p
                 className=" hover:underline cursor-pointer"
@@ -61,7 +68,7 @@ const Login = () => {
             </div>
           </div>
         ) : (
-          <RegisterForm email={""} />
+          <RegisterForm setShowRegister={setShowRegister} />
         )}
       </div>
     </div>

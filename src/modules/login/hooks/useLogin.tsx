@@ -11,6 +11,7 @@ export function useLogin() {
   const { mutate } = useGetLogin();
   const navigate = useNavigate();
 
+
   const handleSubmit = () => {
     if (username && password) {
       setIsLoading(true);
@@ -31,13 +32,8 @@ export function useLogin() {
   };
 
   const validateSession = (): boolean => {
-    // Check if cookies are present
-    const cookies = document.cookie.split(";");
-    // Check if cookies "csrftoken" and "sessionid" are present
-    const csrfToken = cookies.some((cookie) => cookie.includes("csrftoken"));
-    const sessionId = cookies.some((cookie) => cookie.includes("sessionid"));
-
-    return csrfToken && sessionId;
+    const token = localStorage.getItem("authToken");
+    return token ? true : false;
   };
 
   return {

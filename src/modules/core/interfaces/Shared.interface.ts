@@ -6,3 +6,11 @@ export interface Challenge {
   icon: string;
   course_color: string;
 }
+
+export interface ChallengeCover {
+  id: number;
+  course_id: number;
+  status: number; 
+  score?: number;
+  date: string; 
+}
