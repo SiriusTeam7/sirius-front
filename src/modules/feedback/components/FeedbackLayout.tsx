@@ -45,7 +45,7 @@ export default function FeedbackLayout({ feedback }: FeedbackLayoutProps) {
       <div className="flex justify-end  mt-4 items-center ">
         <div className="flex flex-row items-center justify-center space-x-2 ">
           <p className="text-sm font-medium text-gray-300">
-           {successRat ? "Gracias! Se ha guardado tu respuesta" : " ¿Te gustó este reto?"}
+            {successRat ? "Gracias! Se ha guardado tu respuesta" : " ¿Te gustó este reto?"}
           </p>
           <button
             aria-label="Me gustó"
@@ -55,7 +55,7 @@ export default function FeedbackLayout({ feedback }: FeedbackLayoutProps) {
                 rating: 1,
               };
               mutate(challengeData, {
-                onSuccess: (_data) => {
+                onSuccess: () => {
                   setSuccesRat(true);
                 },
               });
@@ -74,7 +74,7 @@ export default function FeedbackLayout({ feedback }: FeedbackLayoutProps) {
                 rating: 0,
               };
               mutate(challengeData, {
-                onSuccess: (_data) => {
+                onSuccess: () => {
                   setSuccesRat(true);
                 },
               });
@@ -91,7 +91,7 @@ export default function FeedbackLayout({ feedback }: FeedbackLayoutProps) {
       {feedback?.class_recommendations && (
         <div className="mt-5 flex-col justify-center">
           <h1>Refuerza con este contenido</h1>
-          <div className="grid grid-cols-3 gap-4 w-full mt-2">
+          <div className="grid sm:grid-cols-3 grid-rows-3  gap-4 w-full mt-2">
             {feedback?.class_recommendations.map((flashcard, index) => (
               <div
                 className="p-2 bg-[#1F2127] rounded-lg  border border-gray-300 shadow-lg"
@@ -106,7 +106,7 @@ export default function FeedbackLayout({ feedback }: FeedbackLayoutProps) {
                     href={extractUrl(flashcard) || "#"}
                   >
                     <p className=" bg-[#133962] px-3 py-1 rounded-lg text-sm font-semibold text-[#6CC3EF]">
-                      Repasar clase 
+                      Repasar clase
                     </p>
                   </a>
                 </div>

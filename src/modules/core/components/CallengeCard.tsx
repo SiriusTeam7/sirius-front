@@ -82,7 +82,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
 
   if (challenge.status === 3) {
     return (
-      <div className="bg-[#1F2127] text-white w-[300px] min-w-[300px] h-36 rounded-lg shadow-md p-6 w-80 flex items-center space-x-4 border border-white/70">
+      <div className="bg-[#1F2127] text-white min-w-80 h-36 rounded-lg shadow-md p-6 w-80 flex items-center space-x-4 border border-white/70">
         <img src={Time} className="w-4 h-4" alt="Ir al reto" />
         <h1 className="font-bold">Proximo reto en {getTimeRemaining(challenge.date)}</h1>
       </div>
@@ -90,7 +90,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
   }
 
   return (
-    <div className="bg-[#1F2127] text-white w-[300px] min-w-[300px] rounded-lg shadow-md p-6 w-80 flex flex-col  border border-white/70">
+    <div className="bg-[#1F2127] text-white min-w-80 rounded-lg shadow-md p-6 w-80 flex flex-col  border border-white/70">
       {renderHeader()}
       {renderFooter()}
     </div>

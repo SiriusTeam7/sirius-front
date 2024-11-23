@@ -1,4 +1,3 @@
-import SideNav from "./SideNav";
 import { Button } from "@/modules/core/design-system/Button";
 import { Textarea } from "@/modules/core/design-system/TextArea";
 import { AudioRecorder } from "./AudioRecorder";
@@ -8,6 +7,8 @@ import CodeEditor from "./CodeEditor";
 import { useStateChallenge } from "../hooks/useStateChallange";
 import LoadingWithFeedback from "./Loading";
 import FeedbackLayout from "@/modules/feedback/components/FeedbackLayout";
+import Sidebar from "@/modules/home/components/SideBar";
+
 import { useLocation } from "react-router-dom";
 import {
   Feedback,
@@ -57,7 +58,7 @@ export default function ChallengeLayout() {
             <>
               <p className="text-gray-300">{challenge?.challenge}</p>
               <div className="mt-16 flex justify-center">
-                <div className="grid grid-cols-3 gap-4 w-full ">
+                <div className="grid sm:grid-cols-3 grid-rows-3 gap-4 w-full ">
                   {renderHints()}
                 </div>
               </div>
@@ -169,14 +170,14 @@ export default function ChallengeLayout() {
 
   return (
     <div className="bg-primary w-full mx-auto flex  flex-col sm:flex-row">
-      <SideNav />
-      <div className="bg-primary  w-full mx-auto flex flex-col p-2">
+      <Sidebar />
+      <div className="bg-primary  w-full mx-auto flex flex-col p-2 mb-20">
         <div className="mt-12">
           <h1 className="text-2xl font-bold text-start">
             Práctica lo que has aprendido
           </h1>
         </div>
-        <div className="bg-primary  w-full mx-auto mt-4 grid grid-cols-2 gap-4">
+        <div className="bg-primary w-full mx-auto mt-4 grid sm:grid-cols-2 grid-rows-2 gap-4">
           {renderChallenge()}
           {/* Segunda división que es dinamica*/}
 
